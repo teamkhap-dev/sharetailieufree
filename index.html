@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Hub - Kho Tìm Tài Liệu Miễn Phí</title>
-    <!-- Font chữ Inter cực sang trọng -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>bash: ~/premium-hub - terminal</title>
+    <!-- Font chữ Fira Code chuyên dành cho dân lập trình -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #10b981;
-            --primary-dark: #111827;
-            --shopee-color: #ff5722;
-            --bg-page: #f8fafc;
-            --card-bg: #ffffff;
-            --border-light: #f1f5f9;
-            --text-main: #1f2937;
-            --text-sub: #64748b;
+            --neon-green: #10b981;    /* Xanh neon đặc trưng */
+            --neon-amber: #f59e0b;    /* Vàng hổ phách cảnh báo */
+            --terminal-bg: #0b0f19;   /* Nền đen tối giản */
+            --editor-bg: #111827;     /* Nền cửa sổ code */
+            --border-color: #1f2937;  /* Viền xám tối */
+            --text-main: #f3f4f6;     /* Chữ chính trắng sáng */
+            --text-muted: #6b7280;    /* Chữ phụ xám */
+            --neon-glow: rgba(16, 185, 129, 0.2);
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Fira Code', monospace; /* Sử dụng font Fira Code */
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-page);
+            background-color: var(--terminal-bg);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 20px 16px;
+            padding: 16px;
         }
 
         .container {
@@ -41,110 +41,116 @@
             margin-top: 10px;
         }
 
-        /* Header */
-        .header {
-            text-align: center;
+        /* Giả lập cửa sổ Code (IDE Window) */
+        .terminal-window {
+            background-color: var(--editor-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             margin-bottom: 24px;
         }
 
-        .badge-premium {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
-            margin-bottom: 12px;
+        /* Thanh tiêu đề cửa sổ hệ thống */
+        .terminal-header {
+            background-color: #0f172a;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        h1 {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            letter-spacing: -0.5px;
+        .terminal-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background-color: #ef4444; }
+        .dot-yellow { background-color: #eab308; }
+        .dot-green { background-color: #22c55e; }
+
+        .terminal-title {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Nội dung chính bên trong Terminal */
+        .terminal-body {
+            padding: 20px;
+        }
+
+        /* Header phong cách CLI */
+        .cli-header {
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+
+        .cli-prompt {
+            color: var(--neon-green);
             margin-bottom: 6px;
         }
 
-        .desc {
-            font-size: 13px;
-            color: var(--text-sub);
-            line-height: 1.5;
+        .cli-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        /* Ô Tìm Kiếm */
+        /* Ô Tìm Kiếm kiểu Dòng lệnh (Command Input) */
         .search-box-wrapper {
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
 
         .search-input {
             width: 100%;
-            padding: 14px 45px 14px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 2px solid transparent;
-            border-radius: 30px;
+            padding: 14px 45px 14px 40px;
+            font-size: 13px;
+            background-color: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             outline: none;
-            background-color: #fff;
-            color: var(--text-main);
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+            color: var(--neon-green);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
-            border-color: var(--primary-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .search-icon-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-amber);
+            font-size: 14px;
         }
 
         .search-icon {
             position: absolute;
-            right: 20px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-sub);
-            font-size: 16px;
-            pointer-events: none;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
-        /* Gợi Ý Nhanh */
-        .tags-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 24px;
-            font-size: 12px;
-            color: var(--text-sub);
-        }
-
-        .tag {
-            background: #fff;
-            padding: 5px 12px;
-            border-radius: 15px;
-            border: 1px solid var(--border-light);
-            cursor: pointer;
-            color: var(--text-main);
-            transition: all 0.2s ease;
-        }
-
-        .tag:hover {
-            border-color: var(--primary-green);
-            color: var(--primary-green);
-        }
-
-        /* ==================== 3 TABS ĐẸP MẮT ==================== */
+        /* ==================== 3 TABS PHONG CÁCH CODE GỌN GÀNG ==================== */
         .tabs-nav {
             display: flex;
-            background: #fff;
-            padding: 6px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            background: #070a13;
+            padding: 4px;
+            border-radius: 8px;
             margin-bottom: 20px;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-color);
         }
 
         .tab-btn {
@@ -152,36 +158,37 @@
             background: none;
             border: none;
             padding: 10px 0;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-sub);
+            color: var(--text-muted);
             cursor: pointer;
-            border-radius: 20px;
-            transition: all 0.25s ease;
+            border-radius: 6px;
+            transition: all 0.2s ease;
             text-align: center;
         }
 
         .tab-btn.active {
-            background-color: var(--primary-dark);
-            color: #fff;
+            background-color: var(--border-color);
+            color: var(--neon-green);
+            text-shadow: 0 0 8px var(--neon-glow);
         }
 
         /* Các phân khu nội dung của Tab */
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease-out;
+            animation: terminalFade 0.2s ease-out;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes terminalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* ----- TAB 1: DANH MỤC (Dạng Lưới Grid xịn) ----- */
+        /* ----- TAB 1: DANH MỤC (Dạng Lưới Grid Terminal) ----- */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -189,35 +196,37 @@
         }
 
         .category-card {
-            background: #fff;
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
+            background: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 16px;
-            text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            gap: 10px;
         }
 
         .category-card:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-2px);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-glow);
+            transform: translateY(-1px);
         }
 
         .category-card .cat-icon {
-            font-size: 24px;
+            font-size: 20px;
         }
 
         .category-card .cat-name {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
+            color: var(--text-main);
         }
 
         .category-card .cat-count {
-            font-size: 11px;
-            color: var(--text-sub);
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-left: auto;
         }
 
         /* ----- TAB 2: KHO TÀI LIỆU ----- */
@@ -228,37 +237,24 @@
         }
 
         .result-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 14px;
+            background: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+            gap: 14px;
             transition: all 0.2s ease;
         }
 
         .result-item:hover {
-            transform: translateY(-1px);
-            border-color: #cbd5e1;
+            border-color: var(--neon-green);
         }
 
         .doc-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 20px;
             flex-shrink: 0;
         }
-
-        .icon-excel { background-color: #ecfdf5; }
-        .icon-word { background-color: #eff6ff; }
-        .icon-pdf { background-color: #fef2f2; }
-        .icon-zip { background-color: #fffbeb; }
 
         .doc-info {
             flex-grow: 1;
@@ -266,9 +262,8 @@
         }
 
         .doc-title {
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.4;
+            font-size: 12px;
+            font-weight: 500;
             color: var(--text-main);
             margin-bottom: 4px;
             white-space: nowrap;
@@ -277,114 +272,102 @@
         }
 
         .doc-meta {
-            font-size: 11px;
-            color: var(--text-sub);
-            font-weight: 500;
+            font-size: 10px;
+            color: var(--text-muted);
         }
 
         .doc-tag {
-            background-color: #f1f5f9;
-            color: var(--text-main);
-            padding: 1px 6px;
-            border-radius: 8px;
-            font-size: 10px;
+            color: var(--neon-amber);
             font-weight: 600;
-            margin-left: 4px;
+            margin-left: 6px;
         }
 
+        /* Nút tải kiểu "Run Command" */
         .btn-download {
-            background: var(--primary-dark);
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
+            background-color: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
             cursor: pointer;
             flex-shrink: 0;
             transition: all 0.2s;
         }
 
         .btn-download:hover {
-            background: var(--primary-green);
+            background-color: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 10px var(--neon-glow);
         }
 
         /* ----- TAB 3: GIỚI THIỆU ----- */
         .intro-card {
-            background: #fff;
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 24px;
-            text-align: center;
-        }
-
-        .intro-avatar {
-            font-size: 40px;
-            margin-bottom: 12px;
+            background: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
         }
 
         .intro-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--neon-amber);
+            margin-bottom: 10px;
         }
 
         .intro-text {
-            font-size: 13px;
-            color: var(--text-sub);
+            font-size: 12px;
+            color: var(--text-main);
             line-height: 1.6;
             margin-bottom: 16px;
         }
 
         .intro-links {
             display: flex;
-            justify-content: center;
             gap: 10px;
         }
 
         .btn-link {
             display: inline-block;
-            background: #f1f5f9;
-            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 12px;
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 4px;
             transition: all 0.2s;
         }
 
         .btn-link:hover {
-            background: var(--primary-green);
-            color: white;
+            border-color: var(--neon-amber);
+            color: var(--neon-amber);
         }
 
-        /* ==================== KHU VỰC ĐỀ XUẤT CHO BẠN (CỐ ĐỊNH Ở DƯỚI) ==================== */
+        /* ==================== PHẦN GỢI Ý (CỐ ĐỊNH PHÍA DƯỚI) ==================== */
         .recommend-section {
-            margin-top: 30px;
-            border-top: 1px dashed #cbd5e1;
+            margin-top: 24px;
+            border-top: 1px dashed var(--border-color);
             padding-top: 20px;
         }
 
         .recommend-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--neon-amber);
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
-        /* Popup Mở Khóa */
+        /* Popup Mở Khóa phong cách Hack Terminal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -392,136 +375,163 @@
         }
 
         .modal {
-            background: white;
-            padding: 28px 20px;
-            border-radius: 24px;
+            background: var(--editor-bg);
+            border: 2px solid var(--neon-amber);
+            padding: 24px;
+            border-radius: 12px;
             width: 90%;
             max-width: 350px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+            animation: terminalPop 0.2s ease-out;
         }
 
-        @keyframes bounceIn {
-            from { transform: scale(0.85); opacity: 0; }
+        @keyframes terminalPop {
+            from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-gift-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
         .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--neon-amber);
+            margin-bottom: 12px;
         }
 
         .modal-desc {
-            font-size: 13px;
-            color: var(--text-sub);
-            line-height: 1.5;
+            font-size: 12px;
+            color: var(--text-main);
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
         .btn-shopee {
             display: block;
-            background: linear-gradient(135deg, #ff5722, #f4511e);
+            background-color: var(--shopee-color);
             color: white;
             text-decoration: none;
             padding: 12px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 13px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
             margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+
+        .btn-shopee:hover {
+            transform: translateY(-1px);
         }
 
         .btn-drive {
             display: block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
+            background-color: var(--neon-green);
+            color: #000;
             text-decoration: none;
             padding: 12px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 13px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+            font-size: 12px;
+        }
+
+        .results-count {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <span class="badge-premium">Premium Hub</span>
-            <h1>Tìm tài liệu bạn cần</h1>
-            <p class="desc">Kho tài liệu chọn lọc và hoàn toàn miễn phí phục vụ cho công việc và học tập.</p>
-        </div>
-
-        <!-- Ô Tìm Kiếm -->
-        <div class="search-box-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên tài liệu...">
-            <span class="search-icon">🔍</span>
-        </div>
-
-        <!-- Thanh điều hướng 3 TABS -->
-        <div class="tabs-nav">
-            <button class="tab-btn active" onclick="switchTab('tab-danhmuc')">📁 Danh mục</button>
-            <button class="tab-btn" onclick="switchTab('tab-khotailieu')">📚 Kho tài liệu</button>
-            <button class="tab-btn" onclick="switchTab('tab-gioithieu')">ℹ️ Giới thiệu</button>
-        </div>
-
-        <!-- ==================== NỘI DUNG CÁC TABS ==================== -->
-        
-        <!-- TAB 1: DANH MỤC -->
-        <div id="tab-danhmuc" class="tab-content active">
-            <div class="categories-grid" id="categoriesGrid">
-                <!-- Tự động kết xuất danh mục bằng Javascript -->
+        <!-- Giả lập cửa sổ IDE -->
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="btn-dot dot-red"></div>
+                    <div class="btn-dot dot-yellow"></div>
+                    <div class="btn-dot dot-green"></div>
+                </div>
+                <div class="terminal-title">bash: ~/premium-hub - main</div>
+                <div></div>
             </div>
-        </div>
 
-        <!-- TAB 2: KHO TÀI LIỆU -->
-        <div id="tab-khotailieu" class="tab-content">
-            <div class="results-count" id="resultsCount">Tất cả tài liệu</div>
-            <div class="results-list" id="resultsList"></div>
-        </div>
+            <div class="terminal-body">
+                <!-- CLI Header -->
+                <div class="cli-header">
+                    <div class="cli-prompt">$ root@premium-hub: sudo get-all-files</div>
+                    <div class="cli-desc">> Kho tài liệu và template chọn lọc hoàn toàn miễn phí.</div>
+                </div>
 
-        <!-- TAB 3: GIỚI THIỆU -->
-        <div id="tab-gioithieu" class="tab-content">
-            <div class="intro-card">
-                <div class="intro-avatar">🦁</div>
-                <div class="intro-title">Chào mừng bạn đến với Premium Hub!</div>
-                <p class="intro-text">Chúng mình chia sẻ những template, tài liệu vận hành và kế toán tuyển chọn. Nhằm có ngân sách duy trì trang web, tụi mình có tham gia kiếm tiền từ tiếp thị liên kết Shopee. Rất mong nhận được sự ủng hộ nhiệt tình từ các bạn!</p>
-                <div class="intro-links">
-                    <a href="https://shopee.vn" target="_blank" class="btn-link">🔥 Ghé Shop Shopee</a>
-                    <a href="https://facebook.com" target="_blank" class="btn-link">💬 Fanpage hỗ trợ</a>
+                <!-- Dòng lệnh Tìm Kiếm -->
+                <div class="search-box-wrapper">
+                    <span class="search-icon-prefix">$</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="search_query...">
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <!-- 3 TABS -->
+                <div class="tabs-nav">
+                    <button class="tab-btn active" onclick="switchTab('tab-danhmuc')">📁 categories.sh</button>
+                    <button class="tab-btn" onclick="switchTab('tab-khotailieu')">📚 repository.py</button>
+                    <button class="tab-btn" onclick="switchTab('tab-gioithieu')">ℹ️ readme.md</button>
+                </div>
+
+                <!-- TAB 1: DANH MỤC -->
+                <div id="tab-danhmuc" class="tab-content active">
+                    <div class="categories-grid" id="categoriesGrid"></div>
+                </div>
+
+                <!-- TAB 2: KHO TÀI LIỆU -->
+                <div id="tab-khotailieu" class="tab-content">
+                    <div class="results-count" id="resultsCount">TOTAL_ITEMS: 8</div>
+                    <div class="results-list" id="resultsList"></div>
+                </div>
+
+                <!-- TAB 3: GIỚI THIỆU -->
+                <div id="tab-gioithieu" class="tab-content">
+                    <div class="intro-card">
+                        <div class="intro-title"># README.md</div>
+                        <p class="intro-text">
+                            Chào mừng bạn đến với Premium Hub!<br><br>
+                            Chúng tôi chia sẻ những template thiết kế, tài liệu vận hành và marketing tuyển chọn hoàn toàn phi lợi nhuận.<br><br>
+                            Để có ngân sách vận hành máy chủ, chúng tôi có tham gia tiếp thị liên kết Shopee. Sự ủng hộ của bạn là động lực rất lớn dành cho team!
+                        </p>
+                        <div class="intro-links">
+                            <a href="https://shopee.vn" target="_blank" class="btn-link">shopee_store.lnk</a>
+                            <a href="https://facebook.com" target="_blank" class="btn-link">contact_support.lnk</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== PHẦN GỢI Ý 5 FILE NGẪU NHIÊN (CỐ ĐỊNH Ở DƯỚI) ==================== -->
+        <!-- PHẦN ĐỀ XUẤT (CỐ ĐỊNH Ở DƯỚI) -->
         <div class="recommend-section">
-            <div class="recommend-title">✨ Đề xuất cho bạn (Ngẫu nhiên)</div>
-            <div class="results-list" id="recommendList">
-                <!-- Javascript tự động render 5 tài liệu ngẫu nhiên tại đây -->
-            </div>
+            <div class="recommend-title">// RECOMMENDED_FOR_YOU</div>
+            <div class="results-list" id="recommendList"></div>
         </div>
     </div>
 
-    <!-- Popup Mở Khóa Shopee -> Drive -->
+    <!-- Popup Mở Khóa phong cách Hacker -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
-            <div class="modal-gift-icon" id="modalGiftIcon">🎁</div>
-            <div class="modal-title" id="modalTitle">Mở Khóa Link Tải</div>
-            <p class="modal-desc" id="modalDesc">Vui lòng ghé thăm Shopee của tụi mình trong 5 giây để lấy link tải Google Drive nhé!</p>
+            <div class="modal-title">[!] SECURITY CHECK</div>
+            <p class="modal-desc">Vui lòng ghé thăm Shopee của chúng tôi trong 5 giây để xác minh hành vi người dùng và mở khóa luồng dữ liệu (Google Drive)!</p>
             <div id="modalActionArea"></div>
         </div>
     </div>
 
     <script>
         // ==========================================================
-        // KHO TÀI LIỆU CỦA BẠN (Đã sửa lỗi cú pháp & có mục Thiết kế)
+        // KHO TÀI LIỆU CỦA BẠN (TỰ THÊM TÀI LIỆU MỚI TẠI ĐÂY)
         // ==========================================================
         const documents = [
             { 
@@ -538,7 +548,7 @@
             { title: "Mẫu Kế Hoạch Du Lịch Đà Lạt 3 Ngày 2 Đêm.docx", category: "Du lịch", size: "1.1 MB", driveUrl: "https://drive.google.com" }
         ];
 
-        // Bản đồ icon & danh mục (Đã bổ sung mục "Thiết kế")
+        // Bản đồ danh mục và Icon
         const categoriesData = {
             "Vận hành": { icon: "📧" },
             "Marketing": { icon: "📚" },
@@ -551,14 +561,14 @@
             "Kinh doanh": { icon: "💼" },
             "Tiktok": { icon: "📷" },
             "Mẹ và bé": { icon: "🍼" },
-            "Thiết kế": { icon: "🎨" }, // Thêm danh mục Thiết kế ở đây
+            "Thiết kế": { icon: "🎨" },
             "Khác": { icon: "📁" }
         };
 
         const linkShopeeCuaBan = "https://shopee.vn";
 
         // ==========================================================
-        // KHU VỰC CODE ĐIỀU KHIỂN LOGIC WEB
+        // KHU VỰC ĐIỀU KHIỂN LOGIC WEB
         // ==========================================================
         const searchInput = document.getElementById('searchInput');
         const resultsList = document.getElementById('resultsList');
@@ -567,7 +577,6 @@
         const resultsCount = document.getElementById('resultsCount');
         
         const modalOverlay = document.getElementById('modalOverlay');
-        const modalGiftIcon = document.getElementById('modalGiftIcon');
         const modalTitle = document.getElementById('modalTitle');
         const modalDesc = document.getElementById('modalDesc');
         const modalActionArea = document.getElementById('modalActionArea');
@@ -575,28 +584,26 @@
         let selectedCategoryFilter = "all";
         let pendingDriveUrl = "";
 
-        // Hàm chuyển Tab
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-            // Tìm nút tab đang bấm
             const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
             if (targetBtn) targetBtn.classList.add('active');
             
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Tự động phân tích kiểu file để hiện icon
+        // Hiện icon kiểu file
         function getFileStyle(fileName) {
             const lower = fileName.toLowerCase();
-            if (lower.endsWith('.xlsx') || lower.endsWith('.xls')) return { icon: '📊', className: 'icon-excel' };
-            if (lower.endsWith('.docx') || lower.endsWith('.doc')) return { icon: '📝', className: 'icon-word' };
-            if (lower.endsWith('.pdf')) return { icon: '📕', className: 'icon-pdf' };
-            return { icon: '📁', className: 'icon-zip' };
+            if (lower.endsWith('.xlsx') || lower.endsWith('.xls')) return { icon: '📊' };
+            if (lower.endsWith('.docx') || lower.endsWith('.doc')) return { icon: '📝' };
+            if (lower.endsWith('.pdf')) return { icon: '📕' };
+            return { icon: '📁' };
         }
 
-        // Render Danh Mục Lưới (Tab 1)
+        // Render Lưới Danh Mục (Tab 1)
         function renderCategories() {
             categoriesGrid.innerHTML = "";
             const counts = {};
@@ -616,18 +623,10 @@
                 card.innerHTML = `
                     <div class="cat-icon">${categoriesData[cat].icon}</div>
                     <div class="cat-name">${cat}</div>
-                    <div class="cat-count">${count} tài liệu</div>
+                    <div class="cat-count">[${count}]</div>
                 `;
                 categoriesGrid.appendChild(card);
             });
-        }
-
-        // Điền nhanh từ gợi ý
-        window.fillSearch = function(text) {
-            searchInput.value = text;
-            switchTab('tab-khotailieu');
-            selectedCategoryFilter = "all";
-            render();
         }
 
         // Render Danh Sách File chính (Tab 2)
@@ -642,29 +641,29 @@
             });
 
             if (selectedCategoryFilter !== "all" && !query) {
-                resultsCount.innerText = `Danh mục: ${selectedCategoryFilter} (${filtered.length} tài liệu)`;
+                resultsCount.innerText = `[INFO] FILTER_CATEGORY: "${selectedCategoryFilter}" (${filtered.length} items)`;
             } else {
-                resultsCount.innerText = query ? `Có ${filtered.length} kết quả cho "${query}"` : `Tất cả tài liệu (${filtered.length})`;
+                resultsCount.innerText = query ? `[INFO] SEARCH_FOUND: ${filtered.length} items` : `[INFO] TOTAL_ITEMS: ${filtered.length}`;
             }
 
             if (filtered.length === 0) {
-                resultsList.innerHTML = `<div class="no-results">Không tìm thấy tài liệu phù hợp... 😢</div>`;
+                resultsList.innerHTML = `<div class="no-results">> NO_ITEMS_MATCHED_SEARCH_QUERY_ERR...</div>`;
                 return;
             }
 
             filtered.forEach(doc => {
                 const style = getFileStyle(doc.title);
-                const sizeText = doc.size ? ` · ${doc.size}` : ""; // Ẩn size thông minh nếu không điền
+                const sizeText = doc.size ? ` · ${doc.size}` : "";
                 
                 const item = document.createElement('div');
                 item.className = 'result-item';
                 item.innerHTML = `
-                    <div class="doc-icon ${style.className}">${style.icon}</div>
+                    <div class="doc-icon">${style.icon}</div>
                     <div class="doc-info">
                         <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag">${doc.category}</span></div>
+                        <div class="doc-meta">ext_drive${sizeText} <span class="doc-tag">#${doc.category}</span></div>
                     </div>
-                    <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}')">Tải về</button>
+                    <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}')">get_link</button>
                 `;
                 resultsList.appendChild(item);
             });
@@ -678,17 +677,17 @@
 
             selected.forEach(doc => {
                 const style = getFileStyle(doc.title);
-                const sizeText = doc.size ? ` · ${doc.size}` : ""; // Ẩn size thông minh nếu không điền
+                const sizeText = doc.size ? ` · ${doc.size}` : "";
 
                 const item = document.createElement('div');
                 item.className = 'result-item';
                 item.innerHTML = `
-                    <div class="doc-icon ${style.className}">${style.icon}</div>
+                    <div class="doc-icon">${style.icon}</div>
                     <div class="doc-info">
                         <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag">${doc.category}</span></div>
+                        <div class="doc-meta">ext_drive${sizeText} <span class="doc-tag">#${doc.category}</span></div>
                     </div>
-                    <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}')">Tải về</button>
+                    <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}')">get_link</button>
                 `;
                 recommendList.appendChild(item);
             });
@@ -697,18 +696,16 @@
         // Logic Mở Khóa liên kết
         window.triggerUnlock = function(driveUrl) {
             pendingDriveUrl = driveUrl;
-            modalGiftIcon.innerText = "🎁";
-            modalTitle.innerText = "Mở Khóa Link Tải";
-            modalDesc.innerText = "Bạn ơi, ghé thăm Shopee của mình một chút trong 5 giây là link tải Google Drive sẽ tự động mở khóa nhé!";
-            modalActionArea.innerHTML = `<a href="${linkShopeeCuaBan}" target="_blank" class="btn-shopee" id="shopeeBtn">Đi tới Shopee</a>`;
+            modalTitle.innerText = "[!] SECURITY CHECK";
+            modalDesc.innerText = "Vui lòng ghé thăm Shopee của chúng tôi trong 5 giây để xác minh hành vi người dùng và mở khóa luồng dữ liệu (Google Drive)!";
+            modalActionArea.innerHTML = `<a href="${linkShopeeCuaBan}" target="_blank" class="btn-shopee" id="shopeeBtn">EXECUTE: OPEN_SHOPEE</a>`;
             modalOverlay.style.display = 'flex';
 
             document.getElementById('shopeeBtn').addEventListener('click', () => {
                 setTimeout(() => {
-                    modalGiftIcon.innerText = "🎉";
-                    modalTitle.innerText = "Đã Mở Khóa Thành Công!";
-                    modalDesc.innerText = "Cảm ơn sự ủng hộ của bạn! Hãy tải tài liệu Google Drive của bạn dưới đây:";
-                    modalActionArea.innerHTML = `<a href="${pendingDriveUrl}" target="_blank" class="btn-drive" id="driveBtn">Tải tài liệu ngay</a>`;
+                    modalTitle.innerText = "[✓] SUCCESS: UNLOCKED";
+                    modalDesc.innerText = "Yêu cầu bảo mật đã được xác thực hoàn tất. Tải luồng dữ liệu về máy của bạn:";
+                    modalActionArea.innerHTML = `<a href="${pendingDriveUrl}" target="_blank" class="btn-drive" id="driveBtn">DOWNLOAD_NOW</a>`;
 
                     document.getElementById('driveBtn').addEventListener('click', () => {
                         setTimeout(() => {
