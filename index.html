@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Hub - Kho Tìm Tài Liệu</title>
+    <title>Premium Hub - Kho Tìm Tài Liệu Miễn Phí</title>
     <!-- Font chữ Inter cực sang trọng -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -461,17 +461,8 @@
 
         <!-- Ô Tìm Kiếm -->
         <div class="search-box-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên tài liệu... Ví dụ: báo cáo, chấm công">
+            <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên tài liệu...">
             <span class="search-icon">🔍</span>
-        </div>
-
-        <!-- Tags gợi ý nhanh -->
-        <div class="tags-wrapper">
-            <span>Gợi ý:</span>
-            <span class="tag" onclick="fillSearch('menu')">menu</span>
-            <span class="tag" onclick="fillSearch('chấm công')">chấm công</span>
-            <span class="tag" onclick="fillSearch('doanh thu')">doanh thu</span>
-            <span class="tag" onclick="fillSearch('khai trương')">khai trương</span>
         </div>
 
         <!-- Thanh điều hướng 3 TABS -->
@@ -533,7 +524,7 @@
         // KHO TÀI LIỆU CỦA BẠN (TỰ THÊM TÀI LIỆU MỚI TẠI ĐY)
         // ==========================================================
         const documents = [
-            { title: "CÔNG THỨC TÍNH GIÁ SẢN PHẨM TRÊN SHOPEE.xlsx", category: "Kinh doanh", size: "114 KB", driveUrl: "https://drive.google.com" },
+            { title: Mọt Canva - Hướng Dẫn Canva Cơ Bản Đến Nâng Cao” Cho Người Mới", category: "Thiết kế", size: "", driveUrl: "https://drive.google.com" },
             { title: "Kế Hoạch Khai Trương Cửa Hàng Bán Lẻ chi tiết.docx", category: "Vận hành", size: "450 KB", driveUrl: "https://drive.google.com" },
             { title: "Trọn bộ 500 từ vựng luyện thi HSK 3.pdf", category: "Tiếng Trung", size: "1.2 MB", driveUrl: "https://drive.google.com" },
             { title: "Báo Cáo Doanh Thu Theo Tháng Tự Động.xlsx", category: "Kinh doanh", size: "90 KB", driveUrl: "https://drive.google.com" },
