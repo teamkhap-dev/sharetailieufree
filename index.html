@@ -56,7 +56,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 20px 16px 80px 16px; /* Cách bottom để không đè nút giỏ hàng */
+            padding: 20px 16px;
         }
 
         .container {
@@ -202,7 +202,7 @@
             box-shadow: 0 4px 14px var(--glow-color);
         }
 
-        /* THANH BỘ LỌC PHỤ (SUB-FILTER) */
+        /* THANH BỘ LỌC PHỤ (SUB-FILTER) - CUỘN NGANG HIỆN ĐẠI */
         .sub-filter-bar {
             display: flex;
             gap: 8px;
@@ -244,7 +244,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 🗺️ STYLE CẤU TRÚC SƠ ĐỒ CÂY KỸ NĂNG (SKILL TREE) XỊN MỊN */
+        /* SƠ ĐỒ CÂY KỸ NĂNG (SKILL TREE) */
         .skill-tree-container {
             display: flex;
             flex-direction: column;
@@ -411,7 +411,6 @@
             font-weight: 700;
         }
 
-        /* Nhóm nút hành động bên phải */
         .doc-actions {
             display: flex;
             flex-direction: column;
@@ -444,7 +443,6 @@
             stroke-linejoin: round;
         }
 
-        /* Nút Lưu Lộ Trình học tập cá nhân */
         .btn-save-cart {
             background: transparent;
             color: var(--text-sub);
@@ -462,7 +460,7 @@
             border-color: var(--primary-green);
         }
 
-        /* 🎒 NÚT GIỎ HÀNG (BALO LỘ TRÌNH) CỐ ĐỊNH GÓC MÀN HÌNH */
+        /* NÚT BALO LỘ TRÌNH CỐ ĐỊNH */
         .fixed-cart-btn {
             position: fixed;
             bottom: 20px;
@@ -517,7 +515,6 @@
 
         .btn-link:hover { border-color: var(--primary-green); color: var(--primary-green); }
 
-        /* Hộp Yêu Cầu Tài Liệu */
         .request-box-card {
             background: var(--card-bg);
             border: 1px solid var(--border-light);
@@ -532,7 +529,6 @@
         .request-textarea:focus { border-color: var(--primary-green); box-shadow: 0 0 10px var(--glow-color); }
         .btn-submit-request { width: 100%; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 11px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-        /* 💌 FOOTER LỜI NHẮN TRUYỀN ĐỘNG LỰC CHỮA LÀNH */
         .motivational-footer {
             margin-top: 40px;
             text-align: center;
@@ -660,7 +656,7 @@
         <div id="loadingArea" class="loading">⏳ Đang cập nhật, đợi chút nha...</div>
 
         <div id="mainContent" style="display: none;">
-            <!-- TAB 1: DANH MỤC (ĐÃ ĐƯỢC CHUYỂN THÀNH SƠ ĐỒ CÂY KỸ NĂNG SKILL TREE ĐỘC LẠ) -->
+            <!-- TAB 1: DANH MỤC -->
             <div id="tab-danhmuc" class="tab-content active">
                 <div class="skill-tree-container" id="skillTreeContainer"></div>
             </div>
@@ -700,14 +696,14 @@
                 <div class="results-list" id="recommendList"></div>
             </div>
 
-            <!-- 💌 FOOTER LỜI NHẮN TRUYỀN ĐỘNG LỰC DƯỚI CHÂN TRANG -->
+            <!-- FOOTER LỜI NHẮN TRUYỀN ĐỘNG LỰC DƯỚI CHÂN TRANG -->
             <div class="motivational-footer">
                 <p class="motivational-text" id="motivationalText">Hôm nay bạn đã cố gắng nhiều rồi, học nốt một chút rồi nghỉ ngơi sớm nha! 🥰</p>
             </div>
         </div>
     </div>
 
-    <!-- 🎒 NÚT BALO LỘ TRÌNH HỌC (GIỎ HÀNG CÁ NHÂN) CỐ ĐỊNH -->
+    <!-- NÚT BALO LỘ TRÌNH CỐ ĐỊNH -->
     <button class="fixed-cart-btn" id="fixedCartBtn" onclick="openCartModal()">
         🎒 Lộ trình của tôi <span id="cartCount">[0]</span>
     </button>
@@ -750,7 +746,6 @@
         const GOOGLE_FORM_ID = '1FAIpQLSex-1yPhGLA3rhiOrGPJaEYdchPWZiHmiOeyDasgcDmfrEzsg';
         const GOOGLE_FORM_ENTRY_ID = 'entry.1889921256';
 
-        // 💌 Danh sách các câu thoại truyền cảm hứng, chữa lành dưới chân trang
         const motivationalSayings = [
             "Hôm nay bạn đã nỗ lực nhiều rồi, học nốt một chút rồi nghỉ ngơi sớm nha! 🥰",
             "Trạm Tri Thức tin rằng sự kiên trì của bạn ngày hôm nay sẽ hái quả ngọt ngày mai. ✨",
@@ -784,24 +779,11 @@
             "cap": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`
         };
 
-        // 🗺️ PHÂN NHÓM DANH MỤC THEO ĐÚNG SƠ ĐỒ CÂY PHÁT TRIỂN (SKILL TREE MAP)
         const skillTreeStructure = [
-            {
-                stageTitle: "🌱 Giai đoạn 1: Khởi động nền tảng",
-                categories: ["Sinh viên", "Ngoại ngữ", "Kỹ năng mềm"]
-            },
-            {
-                stageTitle: "📊 Giai đoạn 2: Kỹ năng văn phòng",
-                categories: ["Văn phòng", "Thiết kế", "Google"]
-            },
-            {
-                stageTitle: "🚀 Giai đoạn 3: Thực chiến chuyên sâu",
-                categories: ["Marketing", "TikTok", "Youtube", "Facebook", "AI - Automation"]
-            },
-            {
-                stageTitle: "💸 Giai đoạn 4: Về đích & Kiếm tiền",
-                categories: ["Kinh doanh", "Freelancer", "Kiếm tiền online", "Đầu tư", "Khác"]
-            }
+            { stageTitle: "🌱 Giai đoạn 1: Khởi động nền tảng", categories: ["Sinh viên", "Ngoại ngữ", "Kỹ năng mềm"] },
+            { stageTitle: "📊 Giai đoạn 2: Kỹ năng văn phòng", categories: ["Văn phòng", "Thiết kế", "Google"] },
+            { stageTitle: "🚀 Giai đoạn 3: Thực chiến chuyên sâu", categories: ["Marketing", "TikTok", "Youtube", "Facebook", "AI - Automation"] },
+            { stageTitle: "💸 Giai đoạn 4: Về đích & Kiếm tiền", categories: ["Kinh doanh", "Freelancer", "Kiếm tiền online", "Đầu tư", "Khác"] }
         ];
 
         const categoriesData = {
@@ -825,7 +807,7 @@
         };
 
         let documents = [];
-        let savedRouteCart = []; // Lưu danh sách giỏ hàng lộ trình cá nhân
+        let savedRouteCart = []; 
         let selectedCategoryFilter = "all";
         let selectedSubFilter = "all";
         let pendingDriveUrl = "";
@@ -850,7 +832,6 @@
         const cartListItems = document.getElementById('cartListItems');
         const cartCount = document.getElementById('cartCount');
 
-        // Ngẫu nhiên lời nhắn động dưới chân trang khi load
         document.getElementById('motivationalText').innerText = motivationalSayings[Math.floor(Math.random() * motivationalSayings.length)];
         document.getElementById('shopeeIntroLink').href = linkShopeeCuaBan;
 
@@ -873,7 +854,8 @@
                         shopeeUrl: row.c[4] ? row.c[4].v : '',
                         author: row.c[5] ? row.c[5].v : '',
                         shortDesc: row.c[6] ? row.c[6].v : '',
-                        type: row.c[7] ? row.c[7].v : 'Khóa học'
+                        // TỐI ƯU BẢO VỆ: Nếu cột H trống hoặc lỗi, tự động gán là 'Khóa học' để tránh lỗi trắng trang
+                        type: (row.c[7] && row.c[7].v) ? row.c[7].v : 'Khóa học'
                     };
                 }).filter(doc => doc.title !== "");
 
@@ -909,7 +891,21 @@
             render();
         }
 
-        // 🗺️ RENDER SƠ ĐỒ CÂY KỸ NĂNG (SKILL TREE) ĐỘC ĐÁO
+        function getFileStyle(doc) {
+            const fileName = doc.title.toLowerCase();
+            const category = doc.category;
+
+            if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) return { icon: svgIcons["excel"], color: "#10b981" };
+            if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) return { icon: svgIcons["word"], color: "#3b82f6" };
+            if (fileName.endsWith('.pdf')) return { icon: svgIcons["pdf"], color: "#ef4444" };
+            if (fileName.endsWith('.zip') || fileName.endsWith('.rar')) return { icon: svgIcons["zip"], color: "#f59e0b" };
+
+            if (categoriesData[category]) {
+                return { icon: categoriesData[category].icon, color: categoriesData[category].color };
+            }
+            return { icon: svgIcons["Khác"], color: "#94a3b8" };
+        }
+
         function renderSkillTree() {
             skillTreeContainer.innerHTML = "";
             const counts = {};
@@ -994,7 +990,6 @@
             return item;
         }
 
-        // LOGIC LƯU TRỮ BALO LỘ TRÌNH (GIỎ HÀNG)
         window.toggleSaveCart = function(doc, btn) {
             const index = savedRouteCart.findIndex(item => item.title === doc.title);
             if (index > -1) {
@@ -1020,7 +1015,6 @@
             cartCount.innerText = `[${savedRouteCart.length}]`;
         }
 
-        // MỞ POPUP BALO LỘ TRÌNH CÁ NHÂN (MỤC 2)
         window.openCartModal = function() {
             cartListItems.innerHTML = "";
             if (savedRouteCart.length === 0) {
@@ -1040,7 +1034,6 @@
                 cartListItems.appendChild(row);
             });
 
-            // Gán link Shopee ngẫu nhiên từ phần tử đầu tiên hoặc mặc định
             const shopeeLink = savedRouteCart[0].shopeeUrl ? savedRouteCart[0].shopeeUrl : linkShopeeCuaBan;
             document.getElementById('cartModalActionArea').innerHTML = `
                 <a href="${shopeeLink}" target="_blank" class="btn-shopee" id="submitCartBtn">
@@ -1072,8 +1065,8 @@
             savedRouteCart.splice(index, 1);
             localStorage.setItem('trth_cart', JSON.stringify(savedRouteCart));
             updateCartButtonCount();
-            openCartModal(); // Refresh bảng
-            render(); // Đồng bộ đổi chữ nút ngoài trang chủ
+            openCartModal(); 
+            render(); 
         }
 
         function render() {
