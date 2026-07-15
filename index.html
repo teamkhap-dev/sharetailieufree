@@ -291,11 +291,14 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer; /* Nhấn vào khung để xem thông tin chi tiết */
             transition: all 0.2s ease;
         }
 
         .result-item:hover {
             border-color: var(--primary-green);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
         .doc-icon {
@@ -325,21 +328,25 @@
             min-width: 0;
         }
 
+        /* Hiện đầy đủ tiêu đề, cỡ chữ 12px vừa vặn tinh tế */
         .doc-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             line-height: 1.4;
             color: var(--text-main);
             margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
         }
 
         .doc-meta {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--text-sub);
             font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px;
         }
 
         .doc-tag {
@@ -347,9 +354,8 @@
             background-color: rgba(16, 185, 129, 0.08);
             padding: 2px 7px;
             border-radius: 6px;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 700;
-            margin-left: 4px;
         }
 
         /* Nút "Vào học" cao cấp tích hợp Icon SVG */
@@ -357,9 +363,9 @@
             background: var(--btn-download-bg);
             color: var(--primary-green);
             border: 1px solid var(--primary-green);
-            padding: 8px 14px;
+            padding: 8px 12px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
             flex-shrink: 0;
@@ -370,8 +376,8 @@
         }
 
         .btn-download svg {
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2.5;
@@ -447,10 +453,10 @@
         .modal {
             background: var(--card-bg);
             border: 1px solid var(--border-light);
-            padding: 28px 24px;
+            padding: 24px;
             border-radius: 20px;
             width: 90%;
-            max-width: 360px;
+            max-width: 400px;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -461,10 +467,51 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-gift-icon { font-size: 40px; margin-bottom: 12px; }
-        .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
-        .modal-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; text-align: center;}
+        .modal-gift-icon { font-size: 36px; margin-bottom: 12px; }
         
+        .modal-title { 
+            font-size: 14px; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            color: var(--text-main); 
+            line-height: 1.5;
+            padding: 0 10px;
+            word-break: break-word;
+        }
+
+        .modal-desc { 
+            font-size: 12.5px; 
+            color: var(--text-sub); 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+        
+        /* Hộp hiển thị Tác giả và Mô tả ngắn */
+        .modal-meta-box {
+            background: var(--primary-bg);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 18px;
+            text-align: left;
+            border: 1px solid var(--border-light);
+        }
+
+        .modal-meta-item {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+        .modal-meta-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-meta-label {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
         .modal-note {
             font-size: 11px;
             color: #ef4444;
@@ -588,6 +635,12 @@
         <div class="modal">
             <div class="modal-gift-icon" id="modalGiftIcon">🎁</div>
             <div class="modal-title" id="modalTitle">Mở khoá Link học</div>
+            
+            <div class="modal-meta-box" id="modalMetaBox">
+                <div class="modal-meta-item" id="modalMetaAuthor"><span class="modal-meta-label">Tác giả:</span> ...</div>
+                <div class="modal-meta-item" id="modalMetaDesc"><span class="modal-meta-label">Mô tả:</span> ...</div>
+            </div>
+
             <p class="modal-desc" id="modalDesc">Bạn ơi, ghé thăm Shopee trong 5s sau đó quay lại để lấy link học Google Drive nhé!</p>
             <div id="modalActionArea"></div>
             <div class="modal-note">Lưu ý: Mở tài liệu bằng trình duyệt để trải nghiệm tốt nhất nha.</div>
@@ -598,7 +651,7 @@
         // ID GOOGLE SHEETS
         const SPREADSHEET_ID = '1-1nlYGptmuQIOXCuYYMVA6nIp_-0uUG1B5vBcDwewJU';
         
-        // Link Shopee mặc định của bạn
+        // Link Shopee mặc định
         const linkShopeeCuaBan = "https://s.shopee.vn/70IXpBepnD";
 
         // Bộ sưu tập mã SVG tối giản siêu sang xịn mịn
@@ -620,37 +673,34 @@
             "Kinh doanh": `<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
             "Sinh viên": `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`,
             "Khác": `<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
-            // Định dạng file list
             "pdf": `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
             "excel": `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>`,
             "word": `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
             "zip": `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="3" x2="12" y2="15"/><circle cx="12" cy="18" r="2"/></svg>`,
-            // Icon "Vào học" (Mũ tốt nghiệp)
             "cap": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`
         };
 
-        // Bản đồ icon & Gán màu sắc đặc trưng (Brand Color) cho từng danh mục
         const categoriesData = {
-            "Thiết kế": { icon: svgIcons["Thiết kế"], color: "#06b6d4" },       /* Cyan */
-            "Lập trình": { icon: svgIcons["Lập trình"], color: "#3b82f6" },     /* Blue */
-            "Ngoại ngữ": { icon: svgIcons["Ngoại ngữ"], color: "#6366f1" },     /* Indigo */
-            "Đầu tư": { icon: svgIcons["Đầu tư"], color: "#10b981" },           /* Emerald */
-            "Kỹ năng mềm": { icon: svgIcons["Kỹ năng mềm"], color: "#f59e0b" },  /* Amber */
-            "Marketing": { icon: svgIcons["Marketing"], color: "#ec4899" },     /* Pink */
-            "TikTok": { icon: svgIcons["TikTok"], color: "#000000" },           /* Black */
-            "Văn phòng": { icon: svgIcons["Văn phòng"], color: "#10b981" },     /* Green */
-            "AI - Automation": { icon: svgIcons["AI - Automation"], color: "#8b5cf6" }, /* Purple */
-            "Freelancer": { icon: svgIcons["Freelancer"], color: "#14b8a6" },   /* Teal */
-            "Kiếm tiền online": { icon: svgIcons["Kiếm tiền online"], color: "#f59e0b" }, /* Orange/Gold */
-            "Youtube": { icon: svgIcons["Youtube"], color: "#ef4444" },         /* Red */
-            "Facebook": { icon: svgIcons["Facebook"], color: "#1877f2" },       /* FB Blue */
-            "Google": { icon: svgIcons["Google"], color: "#ea4335" },           /* Google Red */
-            "Kinh doanh": { icon: svgIcons["Kinh doanh"], color: "#0f766e" },   /* Dark Teal */
-            "Sinh viên": { icon: svgIcons["Sinh viên"], color: "#64748b" },     /* Slate */
-            "Khác": { icon: svgIcons["Khác"], color: "#94a3b8" }                /* Light Slate */
+            "Thiết kế": { icon: svgIcons["Thiết kế"], color: "#06b6d4" },
+            "Lập trình": { icon: svgIcons["Lập trình"], color: "#3b82f6" },
+            "Ngoại ngữ": { icon: svgIcons["Ngoại ngữ"], color: "#6366f1" },
+            "Đầu tư": { icon: svgIcons["Đầu tư"], color: "#10b981" },
+            "Kỹ năng mềm": { icon: svgIcons["Kỹ năng mềm"], color: "#f59e0b" },
+            "Marketing": { icon: svgIcons["Marketing"], color: "#ec4899" },
+            "TikTok": { icon: svgIcons["TikTok"], color: "#000000" },
+            "Văn phòng": { icon: svgIcons["Văn phòng"], color: "#10b981" },
+            "AI - Automation": { icon: svgIcons["AI - Automation"], color: "#8b5cf6" },
+            "Freelancer": { icon: svgIcons["Freelancer"], color: "#14b8a6" },
+            "Kiếm tiền online": { icon: svgIcons["Kiếm tiền online"], color: "#f59e0b" },
+            "Youtube": { icon: svgIcons["Youtube"], color: "#ef4444" },
+            "Facebook": { icon: svgIcons["Facebook"], color: "#1877f2" },
+            "Google": { icon: svgIcons["Google"], color: "#ea4335" },
+            "Kinh doanh": { icon: svgIcons["Kinh doanh"], color: "#0f766e" },
+            "Sinh viên": { icon: svgIcons["Sinh viên"], color: "#64748b" },
+            "Khác": { icon: svgIcons["Khác"], color: "#94a3b8" }
         };
 
-        // HỆ THỐNG LIGHT/DARK MODE (MẶC ĐỊNH SÁNG)
+        // Theme system
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -678,7 +728,7 @@
 
         initTheme();
 
-        // LOGIC LIÊN KẾT SHEETS VÀ HIỂN THỊ
+        // Logic
         let documents = [];
         let selectedCategoryFilter = "all";
         let pendingDriveUrl = "";
@@ -696,6 +746,8 @@
         const modalTitle = document.getElementById('modalTitle');
         const modalDesc = document.getElementById('modalDesc');
         const modalActionArea = document.getElementById('modalActionArea');
+        const modalMetaAuthor = document.getElementById('modalMetaAuthor');
+        const modalMetaDesc = document.getElementById('modalMetaDesc');
 
         document.getElementById('shopeeIntroLink').href = linkShopeeCuaBan;
 
@@ -714,7 +766,11 @@
                         category: row.c[1] ? row.c[1].v : 'Khác',
                         size: row.c[2] ? row.c[2].v : '',
                         driveUrl: row.c[3] ? row.c[3].v : 'https://drive.google.com',
-                        shopeeUrl: row.c[4] ? row.c[4].v : ''
+                        shopeeUrl: row.c[4] ? row.c[4].v : '',
+                        // Cột F: Tác giả
+                        author: row.c[5] ? row.c[5].v : '',
+                        // Cột G: Mô tả ngắn
+                        shortDesc: row.c[6] ? row.c[6].v : ''
                     };
                 }).filter(doc => doc.title !== "");
 
@@ -726,7 +782,7 @@
                 renderRandomRecommendations();
             } catch (error) {
                 console.error(error);
-                loadingArea.innerText = "❌ Không tải được dữ liệu. Kiểm tra lại chế độ Xuất bản lên web của Google Sheets nhé!";
+                loadingArea.innerText = "❌ Không tải được dữ liệu. Kiểm tra lại Sheets!";
             }
         }
 
@@ -740,7 +796,6 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Nhận diện Icon theo đuôi file SVG hoặc lấy SVG chủ đề
         function getFileStyle(doc) {
             const fileName = doc.title.toLowerCase();
             const category = doc.category;
@@ -750,7 +805,6 @@
             if (fileName.endsWith('.pdf')) return { icon: svgIcons["pdf"], color: "#ef4444" };
             if (fileName.endsWith('.zip') || fileName.endsWith('.rar')) return { icon: svgIcons["zip"], color: "#f59e0b" };
 
-            // Nếu không có đuôi file, lấy màu và icon thương hiệu
             if (categoriesData[category]) {
                 return { icon: categoriesData[category].icon, color: categoriesData[category].color };
             }
@@ -769,10 +823,9 @@
                 const card = document.createElement('div');
                 card.className = 'category-card';
                 
-                // Gán biến CSS inline để hover đổi màu động theo màu riêng của danh mục
                 const brandColor = categoriesData[cat].color;
                 card.style.setProperty('--hover-color', brandColor);
-                card.style.setProperty('--shadow-color', `${brandColor}33`); // Độ mờ 20% cho hiệu ứng Glow
+                card.style.setProperty('--shadow-color', `${brandColor}33`);
                 card.style.setProperty('--icon-color', brandColor);
 
                 card.onclick = () => {
@@ -787,6 +840,35 @@
                 `;
                 categoriesGrid.appendChild(card);
             });
+        }
+
+        function createItemHTML(doc) {
+            const style = getFileStyle(doc);
+            const sizeText = doc.size ? ` · ${doc.size}` : "";
+            const authorDisplay = doc.author ? doc.author : "Trạm Tri Thức";
+            
+            const item = document.createElement('div');
+            item.className = 'result-item';
+            item.onclick = (e) => {
+                if (e.target.closest('.btn-download')) return;
+                triggerUnlock(doc);
+            };
+
+            item.innerHTML = `
+                <div class="doc-icon" style="color: ${style.color}">${style.icon}</div>
+                <div class="doc-info">
+                    <div class="doc-title">${doc.title}</div>
+                    <div class="doc-meta">
+                        <span>${authorDisplay}${sizeText}</span> 
+                        <span class="doc-tag" style="color: ${style.color}; background-color: ${style.color}14">${doc.category}</span>
+                    </div>
+                </div>
+                <button class="btn-download" style="color: ${style.color}; border-color: ${style.color}" onmouseover="this.style.backgroundColor='${style.color}'; this.style.color='#ffffff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='${style.color}'" onclick="triggerUnlock(JSON.parse(this.dataset.doc))">
+                    ${svgIcons["cap"]} Vào học
+                </button>
+            `;
+            item.querySelector('.btn-download').dataset.doc = JSON.stringify(doc);
+            return item;
         }
 
         function render() {
@@ -805,22 +887,7 @@
             }
 
             filtered.forEach(doc => {
-                const style = getFileStyle(doc);
-                const sizeText = doc.size ? ` · ${doc.size}` : "";
-                
-                const item = document.createElement('div');
-                item.className = 'result-item';
-                item.innerHTML = `
-                    <div class="doc-icon" style="color: ${style.color}">${style.icon}</div>
-                    <div class="doc-info">
-                        <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag" style="color: ${style.color}; background-color: ${style.color}14">${doc.category}</span></div>
-                    </div>
-                    <button class="btn-download" style="color: ${style.color}; border-color: ${style.color}" onmouseover="this.style.backgroundColor='${style.color}'; this.style.color='#ffffff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='${style.color}'" onclick="triggerUnlock('${doc.driveUrl}', '${doc.shopeeUrl}')">
-                        ${svgIcons["cap"]} Vào học
-                    </button>
-                `;
-                resultsList.appendChild(item);
+                resultsList.appendChild(createItemHTML(doc));
             });
         }
 
@@ -830,31 +897,23 @@
             const selected = shuffled.slice(0, 5);
 
             selected.forEach(doc => {
-                const style = getFileStyle(doc);
-                const sizeText = doc.size ? ` · ${doc.size}` : "";
-
-                const item = document.createElement('div');
-                item.className = 'result-item';
-                item.innerHTML = `
-                    <div class="doc-icon" style="color: ${style.color}">${style.icon}</div>
-                    <div class="doc-info">
-                        <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag" style="color: ${style.color}; background-color: ${style.color}14">${doc.category}</span></div>
-                    </div>
-                    <button class="btn-download" style="color: ${style.color}; border-color: ${style.color}" onmouseover="this.style.backgroundColor='${style.color}'; this.style.color='#ffffff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='${style.color}'" onclick="triggerUnlock('${doc.driveUrl}', '${doc.shopeeUrl}')">
-                        ${svgIcons["cap"]} Vào học
-                    </button>
-                `;
-                recommendList.appendChild(item);
+                recommendList.appendChild(createItemHTML(doc));
             });
         }
 
-        window.triggerUnlock = function(driveUrl, shopeeUrl) {
-            pendingDriveUrl = driveUrl;
-            pendingShopeeUrl = (shopeeUrl && shopeeUrl.trim() !== "") ? shopeeUrl : linkShopeeCuaBan;
+        window.triggerUnlock = function(doc) {
+            pendingDriveUrl = doc.driveUrl;
+            pendingShopeeUrl = (doc.shopeeUrl && doc.shopeeUrl.trim() !== "") ? doc.shopeeUrl : linkShopeeCuaBan;
 
             modalGiftIcon.innerText = "🎁";
-            modalTitle.innerText = "Mở khoá Link học";
+            modalTitle.innerText = doc.title; 
+            
+            const authorDisplay = doc.author ? doc.author : "Trạm Tri Thức";
+            const descDisplay = doc.shortDesc ? doc.shortDesc : "Tài liệu học tập chất lượng cao chia sẻ miễn phí bởi Trạm Tri Thức.";
+            
+            modalMetaAuthor.innerHTML = `<span class="modal-meta-label">Tác giả:</span> ${authorDisplay}`;
+            modalMetaDesc.innerHTML = `<span class="modal-meta-label">Mô tả:</span> ${descDisplay}`;
+
             modalDesc.innerText = "Bạn ơi, ghé thăm Shopee trong 5s sau đó quay lại để lấy link học Google Drive nhé!";
             modalActionArea.innerHTML = `
                 <a href="${pendingShopeeUrl}" target="_blank" class="btn-shopee" id="shopeeBtn">
@@ -867,6 +926,8 @@
                 setTimeout(() => {
                     modalGiftIcon.innerText = "🎉";
                     modalTitle.innerText = "Đã Mở Khóa Thành Công!";
+                    modalMetaAuthor.innerHTML = `<span class="modal-meta-label">Chúc bạn học tốt:</span> ${doc.title}`;
+                    modalMetaDesc.innerHTML = `<span class="modal-meta-label">Người chia sẻ:</span> ${authorDisplay}`;
                     modalDesc.innerText = "Cảm ơn sự ủng hộ cực kỳ đáng quý từ bạn! Hãy truy cập lớp học ở nút dưới đây nha:";
                     modalActionArea.innerHTML = `
                         <a href="${pendingDriveUrl}" target="_blank" class="btn-drive" id="driveBtn">
