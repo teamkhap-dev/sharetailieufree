@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trạm Tri Thức - Kho Tìm Tài Liệu Miễn Phí</title>
-    <!-- Nhúng font chữ Roboto từ Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,6 +20,7 @@
             --btn-download-bg: #f1f5f9;
             --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.02), rgba(5, 150, 105, 0.02));
             --filter-btn-bg: #ffffff;
+            --input-bg: #f8fafc;
         }
 
         [data-theme="dark"] {
@@ -37,6 +37,7 @@
             --btn-download-bg: #1f2937;
             --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(5, 150, 105, 0.03));
             --filter-btn-bg: #1f2937;
+            --input-bg: #070a13;
         }
 
         * {
@@ -171,13 +172,13 @@
             pointer-events: none;
         }
 
-        /* Menu 3 Tabs Hiệu ứng Xanh Trạm Tri Thức */
+        /* Menu 3 Tabs */
         .tabs-nav {
             display: flex;
             background: var(--tab-bg);
             padding: 4px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             border: 1px solid var(--border-light);
         }
 
@@ -213,7 +214,7 @@
         }
 
         .sub-filter-bar::-webkit-scrollbar {
-            display: none; /* Ẩn thanh cuộn để nhìn gọn gàng */
+            display: none;
         }
 
         .filter-chip {
@@ -432,13 +433,14 @@
             box-shadow: 0 0 10px var(--glow-color);
         }
 
-        /* GIỚI THIỆU - TRẠM TRI THỨC */
+        /* GIỚI THIỆU - TRẠM TRI THỨC & KHUNG YÊU CẦU */
         .intro-card {
             background: var(--card-bg);
             border: 1px solid var(--border-light);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .intro-avatar { font-size: 40px; margin-bottom: 12px; }
@@ -459,6 +461,69 @@
         }
 
         .btn-link:hover { border-color: var(--primary-green); color: var(--primary-green); }
+
+        /* Khung Thiết Kế "Hộp Yêu Cầu Tài Liệu" */
+        .request-box-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        }
+
+        .request-box-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .request-box-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .request-textarea {
+            width: 100%;
+            height: 80px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 13px;
+            color: var(--text-main);
+            outline: none;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .request-textarea:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .btn-submit-request {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--glow-color);
+        }
+
+        .btn-submit-request:active {
+            transform: scale(0.99);
+        }
 
         .recommend-section {
             margin-top: 30px;
@@ -509,7 +574,6 @@
         }
 
         .modal-gift-icon { font-size: 36px; margin-bottom: 12px; }
-        
         .modal-title { 
             font-size: 14px; 
             font-weight: 700; 
@@ -619,30 +683,25 @@
 <body>
 
     <div class="container">
-        <!-- Nút theme -->
         <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Đổi giao diện Sáng/Tối">🌙</button>
 
-        <!-- Header -->
         <div class="header">
             <span class="badge-premium">TRẠM TRI THỨC</span>
             <h1>Tìm gì cũng có – Kho tài liệu dành riêng cho bạn</h1>
             <p class="desc"><span class="highlight-box">Tài liệu</span> chất, giá <span class="highlight-box">0đ</span> – Trợ thủ đắc lực cho học tập và công việc</p>
         </div>
 
-        <!-- Ô Tìm Kiếm -->
         <div class="search-box-wrapper">
             <input type="text" id="searchInput" class="search-input" placeholder="Nhập từ khóa rộng để tìm tài liệu...">
             <span class="search-icon">🔍</span>
         </div>
 
-        <!-- Thanh điều hướng 3 TABS CHÍNH -->
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="switchTab('tab-danhmuc')">DANH MỤC</button>
             <button class="tab-btn" onclick="switchTab('tab-khotailieu')">TÀI LIỆU FREE</button>
             <button class="tab-btn" onclick="switchTab('tab-gioithieu')">GIỚI THIỆU</button>
         </div>
 
-        <!-- THANH BỘ LỌC PHỤ (SUB-FILTER) HIỆN ĐẠI CUỘN NGANG -->
         <div class="sub-filter-bar" id="subFilterBar">
             <button class="filter-chip active" onclick="setSubFilter('all')">✨ Tất cả</button>
             <button class="filter-chip" onclick="setSubFilter('latest')">🕒 Mới cập nhật</button>
@@ -652,21 +711,17 @@
             <button class="filter-chip" onclick="setSubFilter('Template')">🎨 Template</button>
         </div>
 
-        <!-- Khung Loading -->
         <div id="loadingArea" class="loading">⏳ Đang cập nhật, đợi chút nha...</div>
 
         <div id="mainContent" style="display: none;">
-            <!-- TAB 1: DANH MỤC -->
             <div id="tab-danhmuc" class="tab-content active">
                 <div class="categories-grid" id="categoriesGrid"></div>
             </div>
 
-            <!-- TAB 2: KHO TÀI LIỆU -->
             <div id="tab-khotailieu" class="tab-content">
                 <div class="results-list" id="resultsList"></div>
             </div>
 
-            <!-- TAB 3: GIỚI THIỆU -->
             <div id="tab-gioithieu" class="tab-content">
                 <div class="intro-card">
                     <div class="intro-avatar">💡</div>
@@ -680,9 +735,15 @@
                         <a href="https://facebook.com" target="_blank" class="btn-link">💬 Fanpage hỗ trợ</a>
                     </div>
                 </div>
+
+                <div class="request-box-card">
+                    <div class="request-box-title">📥 Hộp Yêu Cầu Tài Liệu</div>
+                    <p class="request-box-desc">Bạn đang cần tìm khóa học hay bộ template nào mà Trạm chưa có? Hãy nhắn cho tụi mình biết nhé, Trạm hỗ trợ tìm kiếm nhiệt tình luôn nha!</p>
+                    <textarea id="requestInput" class="request-textarea" placeholder="Nhập tên tài liệu bạn muốn yêu cầu tại đây nha..."></textarea>
+                    <button class="btn-submit-request" onclick="sendUserRequest()">Gửi yêu cầu đến Trạm</button>
+                </div>
             </div>
 
-            <!-- PHẦN GỢI Ý CỐ ĐỊNH Ở DƯỚI -->
             <div class="recommend-section">
                 <div class="recommend-title">✨ Có thể bạn cần (gợi ý)</div>
                 <div class="results-list" id="recommendList"></div>
@@ -690,7 +751,6 @@
         </div>
     </div>
 
-    <!-- Popup Mở Khóa -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-gift-icon" id="modalGiftIcon">🎁</div>
@@ -710,6 +770,12 @@
     <script>
         const SPREADSHEET_ID = '1-1nlYGptmuQIOXCuYYMVA6nIp_-0uUG1B5vBcDwewJU';
         const linkShopeeCuaBan = "https://s.shopee.vn/70IXpBepnD";
+
+        // ==========================================================
+        // CẤU HÌNH LIÊN KẾT GOOGLE FORM (ĐÃ ĐIỀN SẴN ID & ENTRY)
+        // ==========================================================
+        const GOOGLE_FORM_ID = '1FAIpQLSex-1yPhGLA3rhiOrGPJaEYdchPWZiHmiOeyDasgcDmfrEzsg';
+        const GOOGLE_FORM_ENTRY_ID = 'entry.1889921256'; // Đã tích hợp mã entry khớp biểu mẫu của bạn
 
         const svgIcons = {
             "Thiết kế": `<svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
@@ -779,7 +845,7 @@
 
         let documents = [];
         let selectedCategoryFilter = "all";
-        let selectedSubFilter = "all"; // Bộ lọc phụ mặc định
+        let selectedSubFilter = "all";
         let pendingDriveUrl = "";
         let pendingShopeeUrl = "";
 
@@ -811,15 +877,15 @@
                 
                 documents = rows.map((row, index) => {
                     return {
-                        id: index, // Lưu lại chỉ số dòng để tính toán "Mới cập nhật"
+                        id: index,
                         title: row.c[0] ? row.c[0].v : '',
                         category: row.c[1] ? row.c[1].v : 'Khác',
                         size: row.c[2] ? row.c[2].v : '',
                         driveUrl: row.c[3] ? row.c[3].v : 'https://drive.google.com',
                         shopeeUrl: row.c[4] ? row.c[4].v : '',
-                        author: row.c[5] ? row.c[5].v : '', // Cột F
-                        shortDesc: row.c[6] ? row.c[6].v : '', // Cột G
-                        type: row.c[7] ? row.c[7].v : 'Khóa học' // Cột H (Mặc định nếu trống là Khóa học)
+                        author: row.c[5] ? row.c[5].v : '',
+                        shortDesc: row.c[6] ? row.c[6].v : '',
+                        type: row.c[7] ? row.c[7].v : 'Khóa học'
                     };
                 }).filter(doc => doc.title !== "");
 
@@ -845,7 +911,6 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Thay đổi bộ lọc phụ khi click chip
         window.setSubFilter = function(filterType) {
             selectedSubFilter = filterType;
             document.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
@@ -891,7 +956,6 @@
 
                 card.onclick = () => {
                     selectedCategoryFilter = cat;
-                    // Khi chọn danh mục cụ thể, reset bộ lọc phụ về 'all'
                     document.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
                     document.querySelector('.filter-chip[onclick*="\'all\'"]').classList.add('active');
                     selectedSubFilter = "all";
@@ -940,22 +1004,17 @@
             const query = searchInput.value.toLowerCase().trim();
             resultsList.innerHTML = "";
 
-            // 1. Lọc theo ô tìm kiếm và danh mục lớn trước
             let filtered = documents.filter(doc => {
                 const matchSearch = doc.title.toLowerCase().includes(query);
                 const matchCategory = selectedCategoryFilter === "all" || doc.category === selectedCategoryFilter;
                 return matchSearch && matchCategory;
             });
 
-            // 2. ⚡ ÁP DỤNG BỘ LỌC PHỤ NÂNG CAO (SUB-FILTER)
             if (selectedSubFilter === "latest") {
-                // Mới cập nhật: Đảo ngược mảng để những dòng cuối Sheets hiện lên trước
                 filtered = [...filtered].sort((a, b) => b.id - a.id);
             } else if (selectedSubFilter === "popular") {
-                // Được xem nhiều: Xáo trộn ngẫu nhiên một cách tự nhiên
                 filtered = [...filtered].sort(() => 0.5 - Math.random());
             } else if (selectedSubFilter === "Khóa học" || selectedSubFilter === "Tài liệu" || selectedSubFilter === "Template") {
-                // Khóa học, Tài liệu, Template: Lọc theo cột H chính xác
                 filtered = filtered.filter(doc => doc.type === selectedSubFilter);
             }
 
@@ -1020,6 +1079,29 @@
                     });
                 }, 1000);
             });
+        }
+
+        // HÀM GỬI YÊU CẦU TÀI LIỆU VỀ GOOGLE FORMS KHÔNG CHUYỂN TRANG
+        window.sendUserRequest = function() {
+            const requestText = document.getElementById('requestInput').value.trim();
+            
+            if (requestText === "") {
+                alert("Bạn ơi, vui lòng nhập nội dung tên tài liệu trước khi bấm gửi nha! 🥰");
+                return;
+            }
+
+            // Tạo link API submit dữ liệu ngầm lên Google Form
+            const submitUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse?${GOOGLE_FORM_ENTRY_ID}=${encodeURIComponent(requestText)}&submit=Submit`;
+
+            // Bắn dữ liệu ngầm bằng thẻ Image ẩn (Vừa nhanh, vừa không lo bị lỗi chặn bảo mật CORS)
+            const img = new Image();
+            img.src = submitUrl;
+
+            // Hiển thị thông báo thành công ngọt ngào cho khách
+            alert("🎉 Gửi yêu cầu thành công rồi nè! Trạm đã nhận được tin nhắn và sẽ tìm kiếm tài liệu này để cập nhật sớm nhất cho bạn nha. Cảm ơn bạn! 🥰");
+            
+            // Xóa sạch ô nhập liệu để sẵn sàng cho lần sau
+            document.getElementById('requestInput').value = "";
         }
 
         modalOverlay.addEventListener('click', (e) => {
