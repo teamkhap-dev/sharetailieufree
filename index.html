@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Hub - Kho Tìm Tài Liệu Miễn Phí</title>
-    <!-- Nhúng font chữ Roboto từ Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -222,10 +221,11 @@
             gap: 12px;
         }
 
+        /* Đổi màu viền theo biến màu động được gán từ JS */
         .category-card:hover {
-            border-color: var(--primary-green);
+            border-color: var(--hover-color, var(--primary-green));
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--glow-color);
+            box-shadow: 0 4px 12px var(--shadow-color, var(--glow-color));
         }
 
         .category-card .cat-icon {
@@ -234,7 +234,8 @@
             justify-content: center;
             width: 24px;
             height: 24px;
-            color: var(--primary-green);
+            /* Màu icon mặc định sẽ được ghi đè bằng CSS inline */
+            color: var(--icon-color, var(--primary-green));
         }
 
         /* Định dạng icon SVG đồng bộ */
@@ -249,10 +250,10 @@
         }
 
         .category-card .cat-name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             color: var(--text-main);
         }
 
@@ -296,7 +297,6 @@
             font-size: 18px;
             flex-shrink: 0;
             background-color: var(--tab-bg);
-            color: var(--primary-green);
         }
 
         .doc-icon svg {
@@ -482,44 +482,36 @@
 <body>
 
     <div class="container">
-        <!-- Nút theme -->
         <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Đổi giao diện Sáng/Tối">🌙</button>
 
-        <!-- Header -->
         <div class="header">
             <span class="badge-premium">PREMIUM_HUB.EXE</span>
             <h1>Tìm tài liệu bạn cần</h1>
             <p class="desc">Kho tài liệu chọn lọc và hoàn toàn miễn phí phục vụ cho công việc và học tập.</p>
         </div>
 
-        <!-- Ô Tìm Kiếm -->
         <div class="search-box-wrapper">
             <input type="text" id="searchInput" class="search-input" placeholder="Nhập từ khóa rộng để tìm tài liệu...">
             <span class="search-icon">🔍</span>
         </div>
 
-        <!-- Thanh điều hướng 3 TABS -->
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="switchTab('tab-danhmuc')">DANH MỤC</button>
             <button class="tab-btn" onclick="switchTab('tab-khotailieu')">TÀI LIỆU FREE</button>
             <button class="tab-btn" onclick="switchTab('tab-gioithieu')">GIỚI THIỆU</button>
         </div>
 
-        <!-- Khung Loading -->
         <div id="loadingArea" class="loading">⏳ Đang cập nhật, đợi chút nha...</div>
 
         <div id="mainContent" style="display: none;">
-            <!-- TAB 1: DANH MỤC -->
             <div id="tab-danhmuc" class="tab-content active">
                 <div class="categories-grid" id="categoriesGrid"></div>
             </div>
 
-            <!-- TAB 2: KHO TÀI LIỆU -->
             <div id="tab-khotailieu" class="tab-content">
                 <div class="results-list" id="resultsList"></div>
             </div>
 
-            <!-- TAB 3: GIỚI THIỆU -->
             <div id="tab-gioithieu" class="tab-content">
                 <div class="intro-card">
                     <div class="intro-avatar">🦁</div>
@@ -532,7 +524,6 @@
                 </div>
             </div>
 
-            <!-- PHẦN GỢI Ý CỐ ĐỊNH Ở DƯỚI -->
             <div class="recommend-section">
                 <div class="recommend-title">✨ Có thể bạn cần (gợi ý)</div>
                 <div class="results-list" id="recommendList"></div>
@@ -540,7 +531,6 @@
         </div>
     </div>
 
-    <!-- Popup Mở Khóa Shopee -> Drive -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-gift-icon" id="modalGiftIcon">🎁</div>
@@ -557,19 +547,19 @@
         // Link Shopee mặc định của bạn
         const linkShopeeCuaBan = "https://s.shopee.vn/70IXpBepnD";
 
-        // Bộ sưu tập mã SVG tối giản siêu sang xịn mịn (không dùng emoji hệ thống phèn nữa)
+        // Bộ sưu tập mã SVG tối giản siêu sang xịn mịn
         const svgIcons = {
             "Thiết kế": `<svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
             "Lập trình": `<svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>`,
             "Ngoại ngữ": `<svg viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M11 16h8"/></svg>`,
             "Đầu tư": `<svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
-            "Kỹ năng": `<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5M9 18h6M10 22h4"/></svg>`,
+            "Kỹ năng mềm": `<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5M9 18h6M10 22h4"/></svg>`,
             "Marketing": `<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
             "TikTok": `<svg viewBox="0 0 24 24"><path d="M9 18A5 5 0 1 1 14 13v-8h4V3h-4a3 3 0 0 0-3 3v8a2 2 0 1 0 2 2"/></svg>`,
             "Văn phòng": `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>`,
-            "AI": `<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg>`,
+            "AI - Automation": `<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg>`,
             "Freelancer": `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-            "MMO": `<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+            "Kiếm tiền online": `<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
             "Youtube": `<svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25a29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>`,
             "Facebook": `<svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
             "Google": `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
@@ -583,25 +573,25 @@
             "zip": `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="3" x2="12" y2="15"/><circle cx="12" cy="18" r="2"/></svg>`
         };
 
-        // Bản đồ liên kết tên danh mục sang mã Icon SVG
+        // Bản đồ icon & Gán màu sắc đặc trưng (Brand Color) cho từng danh mục
         const categoriesData = {
-            "Thiết kế": { icon: svgIcons["Thiết kế"] },
-            "Lập trình": { icon: svgIcons["Lập trình"] },
-            "Ngoại ngữ": { icon: svgIcons["Ngoại ngữ"] },
-            "Đầu tư": { icon: svgIcons["Đầu tư"] },
-            "Kỹ năng": { icon: svgIcons["Kỹ năng"] },
-            "Marketing": { icon: svgIcons["Marketing"] },
-            "TikTok": { icon: svgIcons["TikTok"] },
-            "Văn phòng": { icon: svgIcons["Văn phòng"] },
-            "AI": { icon: svgIcons["AI"] },
-            "Freelancer": { icon: svgIcons["Freelancer"] },
-            "MMO": { icon: svgIcons["MMO"] },
-            "Youtube": { icon: svgIcons["Youtube"] },
-            "Facebook": { icon: svgIcons["Facebook"] },
-            "Google": { icon: svgIcons["Google"] },
-            "Kinh doanh": { icon: svgIcons["Kinh doanh"] },
-            "Sinh viên": { icon: svgIcons["Sinh viên"] },
-            "Khác": { icon: svgIcons["Khác"] }
+            "Thiết kế": { icon: svgIcons["Thiết kế"], color: "#06b6d4" },       /* Cyan */
+            "Lập trình": { icon: svgIcons["Lập trình"], color: "#3b82f6" },     /* Blue */
+            "Ngoại ngữ": { icon: svgIcons["Ngoại ngữ"], color: "#6366f1" },     /* Indigo */
+            "Đầu tư": { icon: svgIcons["Đầu tư"], color: "#10b981" },           /* Emerald */
+            "Kỹ năng mềm": { icon: svgIcons["Kỹ năng mềm"], color: "#f59e0b" },  /* Amber */
+            "Marketing": { icon: svgIcons["Marketing"], color: "#ec4899" },     /* Pink */
+            "TikTok": { icon: svgIcons["TikTok"], color: "#000000" },           /* Black */
+            "Văn phòng": { icon: svgIcons["Văn phòng"], color: "#10b981" },     /* Green */
+            "AI - Automation": { icon: svgIcons["AI - Automation"], color: "#8b5cf6" }, /* Purple */
+            "Freelancer": { icon: svgIcons["Freelancer"], color: "#14b8a6" },   /* Teal */
+            "Kiếm tiền online": { icon: svgIcons["Kiếm tiền online"], color: "#f59e0b" }, /* Orange/Gold */
+            "Youtube": { icon: svgIcons["Youtube"], color: "#ef4444" },         /* Red */
+            "Facebook": { icon: svgIcons["Facebook"], color: "#1877f2" },       /* FB Blue */
+            "Google": { icon: svgIcons["Google"], color: "#ea4335" },           /* Google Red */
+            "Kinh doanh": { icon: svgIcons["Kinh doanh"], color: "#0f766e" },   /* Dark Teal */
+            "Sinh viên": { icon: svgIcons["Sinh viên"], color: "#64748b" },     /* Slate */
+            "Khác": { icon: svgIcons["Khác"], color: "#94a3b8" }                /* Light Slate */
         };
 
         // HỆ THỐNG LIGHT/DARK MODE (MẶC ĐỊNH SÁNG)
@@ -699,15 +689,16 @@
             const fileName = doc.title.toLowerCase();
             const category = doc.category;
 
-            if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) return { icon: svgIcons["excel"] };
-            if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) return { icon: svgIcons["word"] };
-            if (fileName.endsWith('.pdf')) return { icon: svgIcons["pdf"] };
-            if (fileName.endsWith('.zip') || fileName.endsWith('.rar')) return { icon: svgIcons["zip"] };
+            if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) return { icon: svgIcons["excel"], color: "#10b981" };
+            if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) return { icon: svgIcons["word"], color: "#3b82f6" };
+            if (fileName.endsWith('.pdf')) return { icon: svgIcons["pdf"], color: "#ef4444" };
+            if (fileName.endsWith('.zip') || fileName.endsWith('.rar')) return { icon: svgIcons["zip"], color: "#f59e0b" };
 
+            // Nếu không có đuôi file, lấy màu và icon thương hiệu
             if (categoriesData[category]) {
-                return { icon: categoriesData[category].icon };
+                return { icon: categoriesData[category].icon, color: categoriesData[category].color };
             }
-            return { icon: svgIcons["Khác"] };
+            return { icon: svgIcons["Khác"], color: "#94a3b8" };
         }
 
         function renderCategories() {
@@ -721,6 +712,13 @@
                 const count = counts[cat] || 0;
                 const card = document.createElement('div');
                 card.className = 'category-card';
+                
+                // Gán biến CSS inline để hover đổi màu động theo màu riêng của danh mục
+                const brandColor = categoriesData[cat].color;
+                card.style.setProperty('--hover-color', brandColor);
+                card.style.setProperty('--shadow-color', `${brandColor}33`); // Độ mờ 20% cho hiệu ứng Glow
+                card.style.setProperty('--icon-color', brandColor);
+
                 card.onclick = () => {
                     selectedCategoryFilter = cat;
                     switchTab('tab-khotailieu');
@@ -757,10 +755,10 @@
                 const item = document.createElement('div');
                 item.className = 'result-item';
                 item.innerHTML = `
-                    <div class="doc-icon">${style.icon}</div>
+                    <div class="doc-icon" style="color: ${style.color}">${style.icon}</div>
                     <div class="doc-info">
                         <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag">${doc.category}</span></div>
+                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag" style="color: ${style.color}; background-color: ${style.color}14">${doc.category}</span></div>
                     </div>
                     <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}', '${doc.shopeeUrl}')">Tải về</button>
                 `;
@@ -780,10 +778,10 @@
                 const item = document.createElement('div');
                 item.className = 'result-item';
                 item.innerHTML = `
-                    <div class="doc-icon">${style.icon}</div>
+                    <div class="doc-icon" style="color: ${style.color}">${style.icon}</div>
                     <div class="doc-info">
                         <div class="doc-title">${doc.title}</div>
-                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag">${doc.category}</span></div>
+                        <div class="doc-meta">Drive${sizeText} <span class="doc-tag" style="color: ${style.color}; background-color: ${style.color}14">${doc.category}</span></div>
                     </div>
                     <button class="btn-download" onclick="triggerUnlock('${doc.driveUrl}', '${doc.shopeeUrl}')">Tải về</button>
                 `;
