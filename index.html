@@ -56,7 +56,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 20px 16px;
+            padding: 20px 16px 80px 16px; /* Để trống chân trang không đè nút giỏ hàng */
         }
 
         .container {
@@ -202,7 +202,7 @@
             box-shadow: 0 4px 14px var(--glow-color);
         }
 
-        /* THANH BỘ LỌC PHỤ (SUB-FILTER) - CUỘN NGANG HIỆN ĐẠI */
+        /* THANH BỘ LỌC PHỤ */
         .sub-filter-bar {
             display: flex;
             gap: 8px;
@@ -584,7 +584,7 @@
 
         /* Bảng giỏ hàng */
         .cart-list {
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             margin-bottom: 15px;
             text-align: left;
@@ -593,16 +593,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 4px;
+            padding: 10px 4px;
             border-bottom: 1px solid var(--border-light);
             font-size: 12px;
+            gap: 10px;
         }
         .cart-item-title {
             font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 240px;
+            white-space: normal;
+            word-break: break-word;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+        .cart-action-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
         .btn-remove-cart {
             color: #ef4444;
@@ -610,6 +617,8 @@
             border: none;
             cursor: pointer;
             font-weight: 700;
+            font-size: 11px;
+            padding: 4px;
         }
 
         .no-results { text-align: center; color: var(--text-sub); padding: 20px; font-size: 13px; }
@@ -703,7 +712,7 @@
         </div>
     </div>
 
-    <!-- NÚT BALO LỘ TRÌNH CỐ ĐỊNH -->
+    <!-- 🎒 NÚT BALO LỘ TRÌNH HỌC (GIỎ HÀNG CÁ NHÂN) CỐ ĐỊNH -->
     <button class="fixed-cart-btn" id="fixedCartBtn" onclick="openCartModal()">
         🎒 Lộ trình của tôi <span id="cartCount">[0]</span>
     </button>
@@ -725,17 +734,18 @@
         </div>
     </div>
 
-    <!-- Popup Quản Lý Lộ Trình (Giỏ Hàng) -->
+    <!-- Popup Quản Lý Lộ Trình (Giỏ Hàng) - CẬP NHẬT TRỰC TIẾP KHÔNG QUA SHOPEE -->
     <div class="modal-overlay" id="cartModalOverlay">
-        <div class="modal">
+        <div class="modal" style="max-width: 440px;">
             <div class="modal-gift-icon">🎒</div>
-            <div class="modal-title">Lộ Trình Học Tập Cá Nhân Của Bạn</div>
-            <p class="modal-desc" style="font-size:12px; margin-bottom:10px;">Dưới đây là các tài liệu bạn đã gom lưu lại để dành học:</p>
+            <div class="modal-title" style="font-size: 15px;">Lộ Trình Học Tập Cá Nhân Của Bạn</div>
+            <p class="modal-desc" style="font-size:12px; margin-bottom:14px; text-align: left;">Dưới đây là danh sách toàn bộ các tài liệu bạn đã gom lưu lại. Bạn có thể bấm thẳng nút vào học nhé:</p>
             
             <div class="cart-list" id="cartListItems"></div>
 
-            <p class="modal-desc" id="cartModalDesc">Ghé thăm Shopee trong 5s sau đó quay lại để nhận quyền truy cập toàn bộ lộ trình này nhé!</p>
-            <div id="cartModalActionArea"></div>
+            <div class="modal-note" style="margin-top: 5px; text-align: center; color: var(--text-sub); background: none; border: none; padding: 0;">
+                💡 Nhấn nút "Xóa" nếu muốn gỡ tài liệu khỏi lộ trình nha.
+            </div>
         </div>
     </div>
 
@@ -768,7 +778,7 @@
             "Kiếm tiền online": `<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
             "Youtube": `<svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25a29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>`,
             "Facebook": `<svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
-            "Google": `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+            "Video Editor": `<svg viewBox="0 0 24 24"><path d="M23 7a2 2 0 0 0-2.45-1.45L16 7V5a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2l4.55 1.45A2 2 0 0 0 23 17V7zM14 19H2V5h12v14z"/></svg>`,
             "Kinh doanh": `<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
             "Sinh viên": `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`,
             "Khác": `<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
@@ -779,9 +789,10 @@
             "cap": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`
         };
 
+        // CẬP NHẬT SƠ ĐỒ: Đã xóa Google và bổ sung Video Editor vào đúng Lộ trình
         const skillTreeStructure = [
             { stageTitle: "🌱 Giai đoạn 1: Khởi động nền tảng", categories: ["Sinh viên", "Ngoại ngữ", "Kỹ năng mềm"] },
-            { stageTitle: "📊 Giai đoạn 2: Kỹ năng văn phòng", categories: ["Văn phòng", "Thiết kế", "Google"] },
+            { stageTitle: "📊 Giai đoạn 2: Kỹ năng văn phòng & Sáng tạo", categories: ["Văn phòng", "Thiết kế", "Video Editor"] },
             { stageTitle: "🚀 Giai đoạn 3: Thực chiến chuyên sâu", categories: ["Marketing", "TikTok", "Youtube", "Facebook", "AI - Automation"] },
             { stageTitle: "💸 Giai đoạn 4: Về đích & Kiếm tiền", categories: ["Kinh doanh", "Freelancer", "Kiếm tiền online", "Đầu tư", "Khác"] }
         ];
@@ -800,7 +811,7 @@
             "Kiếm tiền online": { icon: svgIcons["Kiếm tiền online"], color: "#f59e0b" },
             "Youtube": { icon: svgIcons["Youtube"], color: "#ef4444" },
             "Facebook": { icon: svgIcons["Facebook"], color: "#1877f2" },
-            "Google": { icon: svgIcons["Google"], color: "#ea4335" },
+            "Video Editor": { icon: svgIcons["Video Editor"], color: "#a855f7" }, /* Purple Violet */
             "Kinh doanh": { icon: svgIcons["Kinh doanh"], color: "#0f766e" },
             "Sinh viên": { icon: svgIcons["Sinh viên"], color: "#64748b" },
             "Khác": { icon: svgIcons["Khác"], color: "#94a3b8" }
@@ -854,7 +865,6 @@
                         shopeeUrl: row.c[4] ? row.c[4].v : '',
                         author: row.c[5] ? row.c[5].v : '',
                         shortDesc: row.c[6] ? row.c[6].v : '',
-                        // TỐI ƯU BẢO VỆ: Nếu cột H trống hoặc lỗi, tự động gán là 'Khóa học' để tránh lỗi trắng trang
                         type: (row.c[7] && row.c[7].v) ? row.c[7].v : 'Khóa học'
                     };
                 }).filter(doc => doc.title !== "");
@@ -1015,50 +1025,32 @@
             cartCount.innerText = `[${savedRouteCart.length}]`;
         }
 
+        // TỐI ƯU: Popup giỏ hàng hiển thị nút "Vào học" trực tiếp siêu mượt, không điều hướng sang Shopee
         window.openCartModal = function() {
             cartListItems.innerHTML = "";
             if (savedRouteCart.length === 0) {
-                cartListItems.innerHTML = `<div style="font-size:12px; color:var(--text-sub); text-align:center; padding:15px;">Balo trống trơn nè, bạn hãy ấn nút "+ Lưu lộ trình" ở các tài liệu bên ngoài nhé! 🥰</div>`;
-                document.getElementById('cartModalActionArea').innerHTML = "";
+                cartListItems.innerHTML = `<div style="font-size:12px; color:var(--text-sub); text-align:center; padding:20px;">Balo trống trơn nè, bạn hãy ấn nút "+ Lưu lộ trình" ở các tài liệu bên ngoài nhé! 🥰</div>`;
                 cartModalOverlay.style.display = 'flex';
                 return;
             }
 
             savedRouteCart.forEach((item, idx) => {
+                const style = getFileStyle(item);
                 const row = document.createElement('div');
                 row.className = 'cart-item-row';
                 row.innerHTML = `
                     <div class="cart-item-title">${idx + 1}. ${item.title}</div>
-                    <button class="btn-remove-cart" onclick="removeCartItem(${idx})">Xóa</button>
+                    <div class="cart-action-btns">
+                        <a href="${item.driveUrl}" target="_blank" class="btn-download" style="color: ${style.color}; border-color: ${style.color}; padding: 5px 10px; font-size: 10.5px;">
+                            Vào học
+                        </a>
+                        <button class="btn-remove-cart" onclick="removeCartItem(${idx})">Xóa</button>
+                    </div>
                 `;
                 cartListItems.appendChild(row);
             });
 
-            const shopeeLink = savedRouteCart[0].shopeeUrl ? savedRouteCart[0].shopeeUrl : linkShopeeCuaBan;
-            document.getElementById('cartModalActionArea').innerHTML = `
-                <a href="${shopeeLink}" target="_blank" class="btn-shopee" id="submitCartBtn">
-                    🥰 Ghé Shopee 5s kích hoạt học toàn bộ lộ trình
-                </a>
-            `;
             cartModalOverlay.style.display = 'flex';
-
-            document.getElementById('submitCartBtn').onclick = () => {
-                setTimeout(() => {
-                    document.getElementById('cartModalDesc').innerText = "🎉 Kích hoạt lộ trình thành công! Tụi mình đã mở sẵn danh sách liên kết học ở dưới:";
-                    document.getElementById('cartModalActionArea').innerHTML = "";
-                    cartListItems.innerHTML = "";
-                    
-                    savedRouteCart.forEach((item, idx) => {
-                        const row = document.createElement('div');
-                        row.className = 'cart-item-row';
-                        row.innerHTML = `
-                            <div class="cart-item-title" style="color:var(--primary-green); font-weight:700;">${idx + 1}. ${item.title}</div>
-                            <a href="${item.driveUrl}" target="_blank" class="btn-download" style="padding:4px 8px; font-size:10px;">Vào học</a>
-                        `;
-                        cartListItems.appendChild(row);
-                    });
-                }, 1000);
-            };
         }
 
         window.removeCartItem = function(index) {
