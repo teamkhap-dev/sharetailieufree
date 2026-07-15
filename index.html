@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Hub - Kho Tìm Tài Liệu Miễn Phí</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* MẶC ĐỊNH: CHẾ ĐỘ SÁNG (LIGHT MODE) */
-            --primary-green: #059669;
+            --primary-green: #10b981;  /* Màu xanh logo Premium Hub */
             --primary-bg: #f8fafc;
             --card-bg: #ffffff;
             --border-light: #e2e8f0;
             --text-main: #0f172a;
             --text-sub: #475569;
-            --glow-color: rgba(5, 150, 105, 0.08);
+            --glow-color: rgba(16, 185, 129, 0.25);
             --tab-bg: #f1f5f9;
-            --tab-active-bg: #ffffff;
+            --tab-active-bg: linear-gradient(135deg, #10b981, #059669);
             --btn-download-bg: #f1f5f9;
-            --gradient-card: linear-gradient(135deg, rgba(5, 150, 105, 0.03), rgba(16, 185, 129, 0.03));
+            --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(5, 150, 105, 0.03));
         }
 
         [data-theme="dark"] {
@@ -29,20 +29,20 @@
             --border-light: #1f2937;
             --text-main: #f3f4f6;
             --text-sub: #9ca3af;
-            --glow-color: rgba(16, 185, 129, 0.15);
+            --glow-color: rgba(16, 185, 129, 0.35);
             --tab-bg: #111827;
-            --tab-active-bg: #1f2937;
+            --tab-active-bg: linear-gradient(135deg, #10b981, #059669);
             --btn-download-bg: #1f2937;
             --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(5, 150, 105, 0.03));
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Roboto', -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
         }
 
         body {
@@ -61,7 +61,7 @@
             position: relative;
         }
 
-        /* Nút chuyển theme tròn mượt */
+        /* Nút chuyển theme mượt mà */
         .theme-toggle-btn {
             position: absolute;
             top: 0;
@@ -86,7 +86,7 @@
             transform: scale(1.05);
         }
 
-        /* Tiêu đề */
+        /* Tiêu đề chính */
         .header {
             text-align: center;
             margin-bottom: 24px;
@@ -103,9 +103,8 @@
             padding: 5px 12px;
             border-radius: 20px;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 4px 12px var(--glow-color);
             margin-bottom: 12px;
-            font-family: 'Fira Code', monospace;
         }
 
         h1 {
@@ -122,10 +121,10 @@
             line-height: 1.5;
         }
 
-        /* Khung tìm kiếm */
+        /* Thanh tìm kiếm hiệu ứng phát sáng nền xanh */
         .search-box-wrapper {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .search-input {
@@ -138,13 +137,13 @@
             outline: none;
             background-color: var(--card-bg);
             color: var(--text-main);
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.01);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             border-color: var(--primary-green);
-            box-shadow: 0 0 15px var(--glow-color);
+            box-shadow: 0 0 18px var(--glow-color);
         }
 
         .search-icon {
@@ -157,13 +156,13 @@
             pointer-events: none;
         }
 
-        /* Menu 3 Tabs */
+        /* Menu 3 Tabs Hiệu ứng Xanh Premium Hub */
         .tabs-nav {
             display: flex;
             background: var(--tab-bg);
             padding: 4px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             border: 1px solid var(--border-light);
         }
 
@@ -171,9 +170,9 @@
             flex: 1;
             background: none;
             border: none;
-            padding: 10px 0;
+            padding: 11px 0;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-sub);
             cursor: pointer;
             border-radius: 8px;
@@ -182,10 +181,9 @@
         }
 
         .tab-btn.active {
-            background-color: var(--tab-active-bg);
-            color: var(--primary-green);
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            background: var(--tab-active-bg);
+            color: #ffffff;
+            box-shadow: 0 4px 14px var(--glow-color);
         }
 
         .tab-content {
@@ -202,7 +200,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* TAB 1: GRID DANH MỤC kiểu code màu Gradient viền */
+        /* GRID DANH MỤC */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -214,7 +212,7 @@
             background-image: var(--gradient-card);
             border: 1px solid var(--border-light);
             border-radius: 12px;
-            padding: 14px 16px;
+            padding: 15px 16px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -230,15 +228,16 @@
         }
 
         .category-card .cat-icon {
-            font-size: 20px;
+            font-size: 18px;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         .category-card .cat-name {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            text-transform: uppercase; /* VIẾT HOA danh mục */
+            text-transform: uppercase;
             letter-spacing: 0.3px;
             color: var(--text-main);
         }
@@ -247,11 +246,10 @@
             font-size: 11px;
             color: var(--text-sub);
             margin-left: auto;
-            font-family: 'Fira Code', monospace; /* Con số kiểu code */
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        /* TAB 2 & ĐỀ XUẤT: LIST TÀI LIỆU */
+        /* DANH SÁCH TÀI LIỆU */
         .results-list {
             display: flex;
             flex-direction: column;
@@ -292,7 +290,7 @@
 
         .doc-title {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             line-height: 1.4;
             color: var(--text-main);
             margin-bottom: 4px;
@@ -305,18 +303,16 @@
             font-size: 11px;
             color: var(--text-sub);
             font-weight: 500;
-            font-family: 'Fira Code', monospace; /* Dung lượng kiểu code */
         }
 
         .doc-tag {
             color: var(--primary-green);
             background-color: rgba(16, 185, 129, 0.08);
-            padding: 1px 6px;
+            padding: 2px 7px;
             border-radius: 6px;
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
             margin-left: 4px;
-            font-family: 'Inter', sans-serif;
         }
 
         .btn-download {
@@ -338,7 +334,7 @@
             box-shadow: 0 0 10px var(--glow-color);
         }
 
-        /* TAB 3: GIỚI THIỆU */
+        /* GIỚI THIỆU */
         .intro-card {
             background: var(--card-bg);
             border: 1px solid var(--border-light);
@@ -347,31 +343,11 @@
             text-align: center;
         }
 
-        .intro-avatar {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-
-        .intro-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .intro-text {
-            font-size: 13px;
-            color: var(--text-sub);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .intro-links {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
+        .intro-avatar { font-size: 40px; margin-bottom: 12px; }
+        .intro-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .intro-text { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 16px; }
+        .intro-links { display: flex; justify-content: center; gap: 10px; }
+        
         .btn-link {
             display: inline-block;
             border: 1px solid var(--border-light);
@@ -384,12 +360,8 @@
             transition: all 0.2s;
         }
 
-        .btn-link:hover {
-            border-color: var(--primary-green);
-            color: var(--primary-green);
-        }
+        .btn-link:hover { border-color: var(--primary-green); color: var(--primary-green); }
 
-        /* ĐỀ XUẤT CỐ ĐỊNH PHÍA DƯỚI */
         .recommend-section {
             margin-top: 30px;
             border-top: 1px dashed var(--border-light);
@@ -438,24 +410,9 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-gift-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .modal-desc {
-            font-size: 13px;
-            color: var(--text-sub);
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
+        .modal-gift-icon { font-size: 40px; margin-bottom: 10px; }
+        .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .modal-desc { font-size: 13px; color: var(--text-sub); line-height: 1.5; margin-bottom: 20px; }
 
         .btn-shopee {
             display: block;
@@ -480,13 +437,6 @@
             font-size: 13px;
         }
 
-        .results-count {
-            font-size: 11px;
-            color: var(--text-sub);
-            margin-bottom: 12px;
-            font-family: 'Fira Code', monospace;
-        }
-
         .no-results {
             text-align: center;
             color: var(--text-sub);
@@ -500,7 +450,6 @@
             color: var(--primary-green);
             font-size: 14px;
             font-weight: 600;
-            font-family: 'Fira Code', monospace;
         }
     </style>
 </head>
@@ -526,7 +475,7 @@
             <button class="tab-btn" onclick="switchTab('tab-gioithieu')">ℹ️ GIỚI THIỆU</button>
         </div>
 
-        <div id="loadingArea" class="loading">⏳ đang cập nhật, đợi chút nha...</div>
+        <div id="loadingArea" class="loading">⏳ Đang cập nhật, đợi chút nha...</div>
 
         <div id="mainContent" style="display: none;">
             <div id="tab-danhmuc" class="tab-content active">
@@ -534,7 +483,6 @@
             </div>
 
             <div id="tab-khotailieu" class="tab-content">
-                <div class="results-count" id="resultsCount">Tổng hợp các tài liệu: [0]</div>
                 <div class="results-list" id="resultsList"></div>
             </div>
 
@@ -567,37 +515,35 @@
     </div>
 
     <script>
-        // ==========================================================
-        // CẤU HÌNH LIÊN KẾT GOOGLE SHEETS
-        // ==========================================================
+        // ID GOOGLE SHEETS
         const SPREADSHEET_ID = '1-1nlYGptmuQIOXCuYYMVA6nIp_-0uUG1B5vBcDwewJU';
         
         // Link Shopee mặc định của bạn
         const linkShopeeCuaBan = "https://s.shopee.vn/70IXpBepnD";
 
-        // Bản đồ icon & danh mục hệ thống (Đã chuẩn hóa siêu ngắn gọn theo Drive của bạn)
+        // Bản đồ icon chuyên nghiệp kết hợp đồng bộ theo yêu cầu mới của bạn
         const categoriesData = {
-            "AI": { icon: "🤖" },
-            "TikTok": { icon: "📷" },
+            "Thiết kế": { icon: "✒️" },
+            "Lập trình": { icon: "💻" },
+            "Ngoại ngữ": { icon: "🔤" },
+            "Đầu tư": { icon: "📈" },
+            "Kỹ năng": { icon: "💡" },
+            "Marketing": { icon: "✉️" },
+            "TikTok": { icon: "🎵" },
+            "Văn phòng": { icon: "📊" },
+            "AI": { icon: "🧠" },
             "Freelancer": { icon: "💼" },
             "MMO": { icon: "💸" },
-            "Thiết kế": { icon: "🎨" },
             "Youtube": { icon: "🔴" },
             "Facebook": { icon: "📘" },
-            "Ngoại ngữ": { icon: "🗺️" },
             "Google": { icon: "🔍" },
-            "Marketing": { icon: "📚" },
             "Kinh doanh": { icon: "📊" },
             "Sinh viên": { icon: "🎓" },
-            "Văn phòng": { icon: "📝" },
             "Khác": { icon: "📁" }
         };
 
-        // ==========================================================
-        // HỆ THỐNG ĐIỀU CHỈNH CHẾ ĐỘ SÁNG / TỐI (MẶC ĐỊNH SÁNG)
-        // ==========================================================
+        // HỆ THỐNG LIGHT/DARK MODE (MẶC ĐỊNH SÁNG)
         function initTheme() {
-            // Đã đổi mặc định thành Sáng (light) nếu chưa có bộ nhớ cũ
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             updateToggleButton(savedTheme);
@@ -614,20 +560,17 @@
         function updateToggleButton(theme) {
             const btn = document.getElementById('themeToggleBtn');
             if (theme === 'light') {
-                btn.innerText = '🌙'; // Đang ở nền sáng -> Hiện mặt trăng để bấm đổi sang tối
+                btn.innerText = '🌙';
                 btn.title = "Chuyển sang Giao diện Tối";
             } else {
-                btn.innerText = '☀️'; // Đang ở nền tối -> Hiện mặt trời để bấm đổi sang sáng
+                btn.innerText = '☀️';
                 btn.title = "Chuyển sang Giao diện Sáng";
             }
         }
 
-        // Chạy khởi tạo theme
         initTheme();
 
-        // ==========================================================
-        // HỆ THỐNG KẾT NỐI VÀ XỬ LÝ DỮ LIỆU
-        // ==========================================================
+        // LOGIC LIÊN KẾT SHEETS VÀ HIỂN THỊ
         let documents = [];
         let selectedCategoryFilter = "all";
         let pendingDriveUrl = "";
@@ -637,7 +580,6 @@
         const resultsList = document.getElementById('resultsList');
         const recommendList = document.getElementById('recommendList');
         const categoriesGrid = document.getElementById('categoriesGrid');
-        const resultsCount = document.getElementById('resultsCount');
         const loadingArea = document.getElementById('loadingArea');
         const mainContent = document.getElementById('mainContent');
         
@@ -647,10 +589,8 @@
         const modalDesc = document.getElementById('modalDesc');
         const modalActionArea = document.getElementById('modalActionArea');
 
-        // Gán link Shopee vào nút giới thiệu
         document.getElementById('shopeeIntroLink').href = linkShopeeCuaBan;
 
-        // Tải dữ liệu từ Google Sheets
         async function fetchGoogleSheetsData() {
             try {
                 const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
@@ -666,25 +606,22 @@
                         category: row.c[1] ? row.c[1].v : 'Khác',
                         size: row.c[2] ? row.c[2].v : '',
                         driveUrl: row.c[3] ? row.c[3].v : 'https://drive.google.com',
-                        shopeeUrl: row.c[4] ? row.c[4].v : '' // Cột E (Cột thứ 5 trên Sheets)
+                        shopeeUrl: row.c[4] ? row.c[4].v : ''
                     };
                 }).filter(doc => doc.title !== "");
 
-                // Ẩn màn hình chờ, hiện nội dung web chính
                 loadingArea.style.display = 'none';
                 mainContent.style.display = 'block';
 
-                // Khởi tạo các danh sách
                 renderCategories();
                 render();
                 renderRandomRecommendations();
             } catch (error) {
-                console.error("Lỗi tải dữ liệu:", error);
-                loadingArea.innerText = "❌ Lỗi kết nối Google Sheets. Bạn ơi, vui lòng kiểm tra xem Sheets đã được 'Xuất bản lên web' chưa nhé!";
+                console.error(error);
+                loadingArea.innerText = "❌ Không tải được dữ liệu. Kiểm tra lại chế độ Xuất bản lên web của Google Sheets nhé!";
             }
         }
 
-        // Chuyển Tab danh mục
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -695,23 +632,18 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        // Nhận diện Icon sinh động theo Đuôi File hoặc theo Danh Mục chủ đề
         function getFileStyle(doc) {
             const fileName = doc.title.toLowerCase();
             const category = doc.category;
 
-            // 1. Ưu tiên kiểm tra đuôi file trước để hiện đúng định dạng thực tế
             if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) return { icon: '📊' };
             if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) return { icon: '📝' };
             if (fileName.endsWith('.pdf')) return { icon: '📕' };
             if (fileName.endsWith('.zip') || fileName.endsWith('.rar')) return { icon: '📦' };
 
-            // 2. Nếu không có đuôi file rõ ràng, tự động lấy icon theo Danh mục chủ đề
             if (categoriesData[category]) {
                 return { icon: categoriesData[category].icon };
             }
-
-            // 3. Mặc định nếu không khớp trường hợp nào
             return { icon: '📁' };
         }
 
@@ -740,13 +672,6 @@
             });
         }
 
-        window.fillSearch = function(text) {
-            searchInput.value = text;
-            switchTab('tab-khotailieu');
-            selectedCategoryFilter = "all";
-            render();
-        }
-
         function render() {
             const query = searchInput.value.toLowerCase().trim();
             resultsList.innerHTML = "";
@@ -757,12 +682,6 @@
                 return matchSearch && matchCategory;
             });
 
-            if (selectedCategoryFilter !== "all" && !query) {
-                resultsCount.innerText = `FILTER_CATEGORY: "${selectedCategoryFilter}" (${filtered.length} items)`;
-            } else {
-                resultsCount.innerText = query ? `SEARCH_FOUND: ${filtered.length} items` : `TOTAL_ITEMS: [${filtered.length}]`;
-            }
-
             if (filtered.length === 0) {
                 resultsList.innerHTML = `<div class="no-results">Không tìm thấy tài liệu phù hợp... 😢</div>`;
                 return;
@@ -770,7 +689,7 @@
 
             filtered.forEach(doc => {
                 const style = getFileStyle(doc);
-                const sizeText = doc.size ? ` · ${doc.size}` : ""; // Ẩn size nếu bỏ trống trên Sheet
+                const sizeText = doc.size ? ` · ${doc.size}` : "";
                 
                 const item = document.createElement('div');
                 item.className = 'result-item';
@@ -809,15 +728,13 @@
             });
         }
 
-        // Hệ thống Mở khóa Link tải (Đã xử lý link Shopee ngẫu nhiên động từ Sheets)
         window.triggerUnlock = function(driveUrl, shopeeUrl) {
             pendingDriveUrl = driveUrl;
-            // Nếu trên Sheets có link shopee riêng thì dùng, nếu không thì dùng link mặc định của bạn
             pendingShopeeUrl = (shopeeUrl && shopeeUrl.trim() !== "") ? shopeeUrl : linkShopeeCuaBan;
 
             modalGiftIcon.innerText = "🎁";
             modalTitle.innerText = "Mở Khóa Link Tải";
-            modalDesc.innerText = "Bạn ơi, ghé thăm Shopee của mình một chút trong 5 giây là link tải Google Drive sẽ tự động mở khóa nhé!";
+            modalDesc.innerText = "Bạn ơi, ghé thăm Shopee của tụi mình trong 5 giây để lấy link tải Google Drive nhé!";
             modalActionArea.innerHTML = `<a href="${pendingShopeeUrl}" target="_blank" class="btn-shopee" id="shopeeBtn">Đi tới Shopee</a>`;
             modalOverlay.style.display = 'flex';
 
@@ -847,7 +764,6 @@
             render();
         });
 
-        // Khởi chạy lấy dữ liệu từ Sheets
         fetchGoogleSheetsData();
     </script>
 </body>
