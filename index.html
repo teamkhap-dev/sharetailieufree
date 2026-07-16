@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html lang="vi">
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1165,15 +1165,17 @@
             modalMetaAuthor.innerHTML = `<span class="modal-meta-label">Tác giả:</span> ${authorDisplay}`;
             modalMetaDesc.innerHTML = `<span class="modal-meta-label">Mô tả:</span> ${descDisplay}`;
 
-            modalDesc.innerText = "Bạn ơi, ghé thăm Shopee trong 5s sau đó quay lại để lấy link học Google Drive nhé!";
+                        modalDesc.innerText = "Bạn ơi, ghé thăm Shopee trong 5s sau đó quay lại để lấy link học Google Drive nhé!";
             modalActionArea.innerHTML = `
                 <a href="${pendingShopeeUrl}" target="_blank" class="btn-shopee" id="shopeeBtn">
                     🥰 Ok, tui sẽ ghé Shopee xíu xong quay lại liền nè
                 </a>
+                <button onclick="copyShareLink('${doc.id}')" style="margin-top:15px; width:100%; border:1px solid var(--border-light); background:none; color:var(--text-sub); padding:10px; border-radius:10px; font-size:12px; cursor:pointer;">
+                    🔗 Copy link chia sẻ tài liệu này
+                </button>
             `;
             modalOverlay.style.display = 'flex';
-
-            document.getElementById('shopeeBtn').addEventListener('click', () => {
+        document.getElementById('shopeeBtn').addEventListener('click', () => {
                 setTimeout(() => {
                     modalGiftIcon.innerText = "🎉";
                     modalTitle.innerText = "Đã Mở Khóa Thành Công!";
@@ -1203,7 +1205,32 @@
         cartModalOverlay.addEventListener('click', (e) => { if (e.target === cartModalOverlay) cartModalOverlay.style.display = 'none'; });
         searchInput.addEventListener('input', () => { selectedCategoryFilter = "all"; switchTab('tab-khotailieu'); render(); });
 
-        fetchGoogleSheetsData();
-    </script>
+    // XỬ LÝ DEEP LINKING: Tự động mở tài liệu từ link chia sẻ
+    window.addEventListener('load', () => {
+        const params = new URLSearchParams(window.location.search);
+        const docId = params.get('id');
+        const checkInterval = setInterval(() => {
+            if (documents && documents.length > 0) {
+                clearInterval(checkInterval);
+                if (docId) {
+                    const targetDoc = documents.find(d => d.id == docId);
+                    if (targetDoc) triggerUnlock(targetDoc);
+                }
+            }
+        }, 500);
+    });
+
+    // HÀM COPY LINK CHIA SẺ
+    function copyShareLink(id) {
+        const shareLink = window.location.origin + window.location.pathname + "?id=" + id;
+        navigator.clipboard.writeText(shareLink).then(() => {
+            alert("Đã copy link! Bạn gửi cho bạn bè nhé: " + shareLink);
+        });
+    }
+
+    // Tải dữ liệu chính
+    fetchGoogleSheetsData();
+</script>
 </body>
 </html>
+
